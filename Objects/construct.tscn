@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://exh7ue55055x"]
+
+[ext_resource type="Script" path="res://Objects/Construct.gd" id="1_h5fgc"]
+[ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="2_uqeyl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c7fwh"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t7dl8"]
+size = Vector2(128, 126)
+
+[node name="Construct" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_h5fgc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("2_uqeyl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c7fwh")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_t7dl8")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

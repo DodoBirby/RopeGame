@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://br5kr8sihetai"]
+
+[ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="1_eas7b"]
+[ext_resource type="PackedScene" uid="uid://vnywocngypip" path="res://Objects/player.tscn" id="2_2wj1j"]
+[ext_resource type="PackedScene" uid="uid://exh7ue55055x" path="res://Objects/construct.tscn" id="3_rdhnu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lran"]
+size = Vector2(1404, 126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0iqss"]
+size = Vector2(34, 44)
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(575, 578)
+collision_layer = 2
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+scale = Vector2(10.9531, 1)
+texture = ExtResource("1_eas7b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_8lran")
+
+[node name="TetherPoint" type="StaticBody2D" parent="."]
+position = Vector2(547, 60)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="TetherPoint"]
+scale = Vector2(0.265625, 0.34375)
+texture = ExtResource("1_eas7b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TetherPoint"]
+shape = SubResource("RectangleShape2D_0iqss")
+
+[node name="Construct" parent="." instance=ExtResource("3_rdhnu")]
+position = Vector2(234, 384)
+
+[node name="Player" parent="." instance=ExtResource("2_2wj1j")]
+position = Vector2(465, 389)
