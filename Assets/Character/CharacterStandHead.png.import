@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7unfpokti0iw"
-path="res://.godot/imported/RunningCharacterHead.png-abeb980baaf800f09983ac2484ef9bad.ctex"
+uid="uid://2gvtwgk1uuwc"
+path="res://.godot/imported/CharacterStandHead.png-b3389c0a864f48deb3fdf445547bcec1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Character/RunningCharacterHead.png"
-dest_files=["res://.godot/imported/RunningCharacterHead.png-abeb980baaf800f09983ac2484ef9bad.ctex"]
+source_file="res://Assets/Character/CharacterStandHead.png"
+dest_files=["res://.godot/imported/CharacterStandHead.png-b3389c0a864f48deb3fdf445547bcec1.ctex"]
 
 [params]
 
