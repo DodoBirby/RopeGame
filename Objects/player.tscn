@@ -372,15 +372,14 @@ texture_filter = 1
 position = Vector2(8, -48)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_a5fv1")
-frame = 10
-frame_progress = 0.781779
+frame_progress = 0.736726
 
 [node name="LegsRunning" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(8, -14)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_3e7sp")
-frame_progress = 0.98428
+frame_progress = 0.602414
 
 [node name="TorsoRunning" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -411,3 +410,5 @@ scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ie7kq")
 frame = 8
 frame_progress = 0.501519
+
+[node name="Camera2D" type="Camera2D" parent="."]

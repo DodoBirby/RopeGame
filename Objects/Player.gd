@@ -1,9 +1,12 @@
 class_name Player
 extends CharacterBody2D
-@export var GRAVITY = 2000
-@export var JUMPFORCE = 1000
-@export var MOVESPEED = 180
-@export var PULLFORCE = 0.5
+var MOVESPEED = 360
+var PULLFORCE = 0.5
+var JUMP_HEIGHT: float = 130
+var TIME_TO_PEAK: float = 0.5
+
+var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
+var JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 
 var state = STATES.GROUNDED
 

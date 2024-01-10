@@ -28,7 +28,7 @@ func _physics_process(delta):
 	
 	elif Input.is_action_just_pressed("Down") and colliding:
 		active = true
-		player.visible = false
+		
 	velocity.y += GRAVITY * delta * gravmultiplier
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
 	move_and_slide()
