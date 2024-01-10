@@ -9,9 +9,7 @@ var TIME_TO_PEAK: float = 0.5
 var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 var JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 
-var state = STATES.GROUNDED
-
-enum STATES {AIRBORNE, GROUNDED}
+var state
 
 '''
 Runs once every frame (60fps)
