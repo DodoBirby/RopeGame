@@ -9,14 +9,21 @@ var TETHERDISTANCE: float = 500
 var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 var JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 
-
+var construct_scene: PackedScene = preload("res://Objects/RopeConstruct.tscn")
 
 var state = STATES.GROUNDED
+var active = true
+var tetherlength = 300
 
-enum STATES {AIRBORNE, GROUNDED, TETHERED}
+enum STATES {AIRBORNE, GROUNDED, INACTIVE}
 
-@export var tetherpoint: Construct
+var tetherpoint: RopeConstruct
 
+func _ready():
+	tetherpoint = construct_scene.instantiate()
+	get_parent().add_child.call_deferred(tetherpoint)
+	tetherpoint.position = position
+	tetherpoint.player = self
 '''
 Runs once every frame (60fps)
 '''
@@ -37,7 +44,12 @@ func grounded_tick(delta):
 		dir = 1
 	if Input.is_action_just_pressed("Up"):
 		velocity.y = -JUMPFORCE
+	if Input.is_action_just_pressed("Down"):
+		tetherpoint.clap()
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
+	var tethervector = tetherpoint.position - position
+	if (tethervector.length() > tetherlength + 20):
+		position += tethervector.normalized() * (tethervector.length() - tetherlength - 20)
 	move_and_slide()
 
 
@@ -53,6 +65,8 @@ func airborne_tick(delta):
 		dir = 1
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
+	if Input.is_action_just_pressed("Down"):
+		tetherpoint.clap()
 	if dir != 0:
 		var speedcap
 		if dir == 1:
@@ -63,10 +77,13 @@ func airborne_tick(delta):
 	velocity.y += GRAVITY * delta * gravmultiplier
 	var tethervector = tetherpoint.position - position
 	var dotproduct = tethervector.normalized().dot(velocity)
-	if (dotproduct < 0 and tethervector.length() > 300):
-		velocity += -dotproduct * tethervector.normalized()
-	if (tethervector.length() > 300):
-		velocity += tethervector * 0.1
+	if (dotproduct < 0 and tethervector.length() > tetherlength):
+		var multiplier = 1
+		if dotproduct < -300:
+			multiplier = 1.5
+		velocity += -dotproduct * tethervector.normalized() * multiplier
+	if (tethervector.length() > tetherlength + 20):
+		position += tethervector.normalized() * (tethervector.length() - tetherlength - 20)
 	move_and_slide()
 '''
 Called when a state transition needs to occur
@@ -80,7 +97,9 @@ func change_state(newstate):
 Runs when a state is exited
 '''
 func exit_state(oldstate) -> void:
-	pass
+	match oldstate:
+		STATES.INACTIVE:
+			visible = true
 
 '''
 Runs when a new state is entered
@@ -97,6 +116,9 @@ func state_tick(delta) -> void:
 			grounded_tick(delta)
 		STATES.AIRBORNE:
 			airborne_tick(delta)
+		STATES.INACTIVE:
+			visible = false
+			position = Vector2(-100, -100)
 '''
 Returns a state to transition to on this frame
 '''
@@ -105,9 +127,22 @@ func state_transition():
 		STATES.AIRBORNE:
 			if is_on_floor():
 				return STATES.GROUNDED
+			if not active:
+				return STATES.INACTIVE
 		STATES.GROUNDED:
 			if not is_on_floor():
 				return STATES.AIRBORNE
-		STATES.TETHERED:
-			pass
+			if not active:
+				return STATES.INACTIVE
+		STATES.INACTIVE:
+			if active:
+				return STATES.GROUNDED
 	return null
+
+func throw(angle):
+	active = true
+	change_state(STATES.AIRBORNE)
+	position = tetherpoint.position
+	var throwvector = Vector2.UP.rotated(angle)
+	velocity = throwvector * 1300
+	position += throwvector * 100

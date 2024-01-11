@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://br5kr8sihetai"]
+[gd_scene load_steps=4 format=3 uid="uid://br5kr8sihetai"]
 
 [ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="1_eas7b"]
 [ext_resource type="PackedScene" uid="uid://vnywocngypip" path="res://Objects/player.tscn" id="2_2wj1j"]
-[ext_resource type="PackedScene" uid="uid://c2am0ffc371cy" path="res://Objects/RopeConstruct.tscn" id="3_prkdu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lran"]
 size = Vector2(1404, 126)
@@ -20,8 +19,5 @@ texture = ExtResource("1_eas7b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_8lran")
 
-[node name="Player" parent="." node_paths=PackedStringArray("tetherpoint") instance=ExtResource("2_2wj1j")]
+[node name="Player" parent="." instance=ExtResource("2_2wj1j")]
 position = Vector2(465, 389)
-tetherpoint = NodePath("../RopeConstruct")
-
-[node name="RopeConstruct" parent="." instance=ExtResource("3_prkdu")]

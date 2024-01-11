@@ -1,14 +1,18 @@
+class_name RopeConstruct
 extends Construct
 
-enum STATES {AIRBORNE, GROUNDED, DORMANT, AWAKE}
+enum STATES {AIRBORNE, GROUNDED, DORMANT}
 
-var rope_bridge: StaticBody2D
-var rope_bridge_scene: PackedScene = preload("res://Objects/rope_bridge.tscn")
+@export var player: Player
+var awake = false
+var prevdir = -1
+var colliding = false
+
 
 func _ready():
 	MOVESPEED = 360
-	JUMP_HEIGHT = 130
-	TIME_TO_PEAK = 0.5
+	JUMP_HEIGHT = 60
+	TIME_TO_PEAK = 0.2
 	GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 	JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 	state = STATES.DORMANT
@@ -17,7 +21,9 @@ func _ready():
 Runs when a state is exited
 '''
 func exit_state(oldstate) -> void:
-	pass
+	match oldstate:
+		STATES.DORMANT:
+			modulate = Color(1, 1, 1)
 
 '''
 Runs when a new state is entered
@@ -38,40 +44,53 @@ func state_tick(delta) -> void:
 			dormant_tick(delta)
 
 func dormant_tick(delta):
-	pass
+	velocity.x = 0
+	velocity.y += GRAVITY * delta
+	if awake:
+		modulate = Color(1, 1, 1)
+		if colliding:
+			player.active = false
+			change_state(STATES.GROUNDED)
+	else:
+		modulate = Color(0, 0, 0)
+	move_and_slide()
 
 func grounded_tick(delta):
 	var dir = 0
 	if Input.is_action_pressed("Left"):
 		dir = -1
+		prevdir = -1
 	elif Input.is_action_pressed("Right"):
 		dir = 1
+		prevdir = 1
 	if Input.is_action_just_pressed("Up"):
 		velocity.y = -JUMPFORCE
-	if Input.is_action_just_pressed("Down") and dir != 0:
-		create_rope_bridge(dir)
-	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
+	if Input.is_action_just_pressed("Throw"):
+		var angle
+		if prevdir == -1:
+			angle = -PI / 4
+		else:
+			angle = PI / 4
+		player.throw(angle)
+		awake = false
+		change_state(STATES.DORMANT)
+		
+	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
 	move_and_slide()
 
-func create_rope_bridge(dir):
-	if rope_bridge:
-		rope_bridge.queue_free()
-	rope_bridge = rope_bridge_scene.instantiate()
-	get_parent().add_child(rope_bridge)
-	rope_bridge.position = position
-	rope_bridge.position.x = position.x + 280 * dir
-	rope_bridge.scale.x = 10
 
 func airborne_tick(delta):
 	var dir = 0
 	var gravmultiplier = 1
 	if Input.is_action_pressed("Left"):
 		dir = -1
+		prevdir = -1
 	elif Input.is_action_pressed("Right"):
 		dir = 1
+		prevdir = 1
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
-	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
+	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
 	velocity.y += GRAVITY * delta * gravmultiplier
 	move_and_slide()
 
@@ -88,3 +107,17 @@ func state_transition():
 				return STATES.AIRBORNE
 	
 	return null
+
+func clap():
+	awake = !awake
+
+
+
+func _on_pickup_box_body_entered(body):
+	if body is Player:
+		colliding = true
+
+
+func _on_pickup_box_body_exited(body):
+	if body is Player:
+		colliding = false
