@@ -20,7 +20,8 @@ texture = ExtResource("1_eas7b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_8lran")
 
-[node name="Player" parent="." instance=ExtResource("2_2wj1j")]
+[node name="Player" parent="." node_paths=PackedStringArray("tetherpoint") instance=ExtResource("2_2wj1j")]
 position = Vector2(465, 389)
+tetherpoint = NodePath("../RopeConstruct")
 
 [node name="RopeConstruct" parent="." instance=ExtResource("3_prkdu")]

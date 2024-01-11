@@ -411,3 +411,4 @@ frame = 8
 frame_progress = 0.501519
 
 [node name="Camera2D" type="Camera2D" parent="."]
+enabled = false

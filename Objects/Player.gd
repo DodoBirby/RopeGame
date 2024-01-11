@@ -1,16 +1,21 @@
 class_name Player
 extends CharacterBody2D
-var MOVESPEED = 360
+var MOVESPEED = 400
 var PULLFORCE = 0.5
 var JUMP_HEIGHT: float = 130
 var TIME_TO_PEAK: float = 0.5
+var TETHERDISTANCE: float = 500
 
 var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 var JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 
+
+
 var state = STATES.GROUNDED
 
 enum STATES {AIRBORNE, GROUNDED, TETHERED}
+
+@export var tetherpoint: Construct
 
 '''
 Runs once every frame (60fps)
@@ -48,10 +53,21 @@ func airborne_tick(delta):
 		dir = 1
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
-	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
+	if dir != 0:
+		var speedcap
+		if dir == 1:
+			speedcap = max(velocity.x, MOVESPEED)
+		else:
+			speedcap = min(velocity.x, -MOVESPEED)
+		velocity.x = lerp(velocity.x, float(speedcap), 0.3)
 	velocity.y += GRAVITY * delta * gravmultiplier
+	var tethervector = tetherpoint.position - position
+	var dotproduct = tethervector.normalized().dot(velocity)
+	if (dotproduct < 0 and tethervector.length() > 300):
+		velocity += -dotproduct * tethervector.normalized()
+	if (tethervector.length() > 300):
+		velocity += tethervector * 0.1
 	move_and_slide()
-
 '''
 Called when a state transition needs to occur
 '''
@@ -81,7 +97,6 @@ func state_tick(delta) -> void:
 			grounded_tick(delta)
 		STATES.AIRBORNE:
 			airborne_tick(delta)
-
 '''
 Returns a state to transition to on this frame
 '''

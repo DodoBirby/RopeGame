@@ -11,7 +11,7 @@ func _ready():
 	TIME_TO_PEAK = 0.5
 	GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 	JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
-	state = STATES.GROUNDED
+	state = STATES.DORMANT
 	
 '''
 Runs when a state is exited
@@ -59,7 +59,7 @@ func create_rope_bridge(dir):
 	rope_bridge = rope_bridge_scene.instantiate()
 	get_parent().add_child(rope_bridge)
 	rope_bridge.position = position
-	rope_bridge.position.x = position.x + 50 * dir
+	rope_bridge.position.x = position.x + 280 * dir
 	rope_bridge.scale.x = 10
 
 func airborne_tick(delta):
