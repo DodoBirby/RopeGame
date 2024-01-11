@@ -10,11 +10,16 @@ var colliding = false
 
 
 func _ready():
+	# Ok to touch
 	MOVESPEED = 360
 	JUMP_HEIGHT = 60
 	TIME_TO_PEAK = 0.2
+	
+	# Don't touch
 	GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 	JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
+	
+	# Initial state
 	state = STATES.DORMANT
 	
 '''
@@ -66,12 +71,7 @@ func grounded_tick(delta):
 	if Input.is_action_just_pressed("Up"):
 		velocity.y = -JUMPFORCE
 	if Input.is_action_just_pressed("Throw"):
-		var angle
-		if prevdir == -1:
-			angle = -PI / 4
-		else:
-			angle = PI / 4
-		player.throw(angle)
+		player.throw(prevdir * PI / 4)
 		awake = false
 		change_state(STATES.DORMANT)
 		

@@ -1,19 +1,22 @@
 class_name Player
 extends CharacterBody2D
+# Things to modify
 var MOVESPEED = 400
 var PULLFORCE = 0.5
 var JUMP_HEIGHT: float = 130
 var TIME_TO_PEAK: float = 0.5
-var TETHERDISTANCE: float = 500
+var THROWFORCE = 1300
+var tetherlength = 500
 
+
+# Don't touch these, these are controlled by JUMP_HEIGHT and TIME_TO_PEAK above
 var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 var JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 
 var construct_scene: PackedScene = preload("res://Objects/RopeConstruct.tscn")
-
 var state = STATES.GROUNDED
 var active = true
-var tetherlength = 300
+
 
 enum STATES {AIRBORNE, GROUNDED, INACTIVE}
 
@@ -144,5 +147,5 @@ func throw(angle):
 	change_state(STATES.AIRBORNE)
 	position = tetherpoint.position
 	var throwvector = Vector2.UP.rotated(angle)
-	velocity = throwvector * 1300
+	velocity = throwvector * THROWFORCE
 	position += throwvector * 100
