@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0e74x8iknmjo"
-path="res://.godot/imported/CharacterHoldArm_Over_Objects.png-f107002237015175f18f2c4d2ab71c45.ctex"
+uid="uid://b4jeonuyjy67o"
+path="res://.godot/imported/PlayerUnderArmSheet.png-98f4553b14a03cbb804ecb469ddbe63f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Character/CharacterHoldArm_Over_Objects.png"
-dest_files=["res://.godot/imported/CharacterHoldArm_Over_Objects.png-f107002237015175f18f2c4d2ab71c45.ctex"]
+source_file="res://Assets/PlayerUnderArmSheet.png"
+dest_files=["res://.godot/imported/PlayerUnderArmSheet.png-98f4553b14a03cbb804ecb469ddbe63f.ctex"]
 
 [params]
 

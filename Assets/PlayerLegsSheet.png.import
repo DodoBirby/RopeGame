@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnvp080of421j"
-path="res://.godot/imported/CharacterStandLegs.png-f479cda4ff65ad2bb1e8805190d0911c.ctex"
+uid="uid://c013d5exah3om"
+path="res://.godot/imported/PlayerLegsSheet.png-733b1f901f90cbf1d24b894b7bd4ffee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Character/CharacterStandLegs.png"
-dest_files=["res://.godot/imported/CharacterStandLegs.png-f479cda4ff65ad2bb1e8805190d0911c.ctex"]
+source_file="res://Assets/PlayerLegsSheet.png"
+dest_files=["res://.godot/imported/PlayerLegsSheet.png-733b1f901f90cbf1d24b894b7bd4ffee.ctex"]
 
 [params]
 

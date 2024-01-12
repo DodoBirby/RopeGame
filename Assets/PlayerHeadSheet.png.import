@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjarxmyiwm2do"
-path="res://.godot/imported/CharacterGrabArm_Over_Objects.png-a5b0abd9dc116c4bea83b74593cf648f.ctex"
+uid="uid://bwmvsvbbvuy8s"
+path="res://.godot/imported/PlayerHeadSheet.png-454da9685cb1a21b8a1c293acb942a60.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Character/CharacterGrabArm_Over_Objects.png"
-dest_files=["res://.godot/imported/CharacterGrabArm_Over_Objects.png-a5b0abd9dc116c4bea83b74593cf648f.ctex"]
+source_file="res://Assets/PlayerHeadSheet.png"
+dest_files=["res://.godot/imported/PlayerHeadSheet.png-454da9685cb1a21b8a1c293acb942a60.ctex"]
 
 [params]
 

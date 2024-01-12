@@ -11,8 +11,15 @@ var tetherlength = 500
 var health = 2
 var maxhealth = 2
 var invincibility = 0
+var running = 0
 
-
+# Animator vars
+@onready var spritehead = $SpriteController/Head.Animation
+@onready var spritebody = $SpriteController/Torso.Animation
+@onready var spritelegs = $SpriteController/Legs.Animation
+@onready var spritearms = $SpriteController/BodyArm.Animation
+@onready var spritearmb = $SpriteController/BackgroundArm.Animation
+@onready var spritearma = $SpriteController/ForegroundArm.Animation
 
 # Don't touch these, these are controlled by JUMP_HEIGHT and TIME_TO_PEAK above
 var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
@@ -50,8 +57,12 @@ func grounded_tick(delta):
 	var dir = 0
 	if Input.is_action_pressed("Left"):
 		dir = -1
+		running = true
 	elif Input.is_action_pressed("Right"):
 		dir = 1
+		running = true
+	else:
+		running = false
 	if Input.is_action_just_pressed("Up"):
 		velocity.y = -JUMPFORCE
 	if Input.is_action_just_pressed("Down"):
