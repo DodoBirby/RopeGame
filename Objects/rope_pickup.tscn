@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://diw1h5do24n2v"]
+
+[ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="1_0atpf"]
+[ext_resource type="Script" path="res://Objects/rope_pickup.gd" id="2_3ffrt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kntkr"]
+size = Vector2(132, 131.459)
+
+[node name="RopePickup" type="Sprite2D"]
+scale = Vector2(0.5, 0.578125)
+texture = ExtResource("1_0atpf")
+script = ExtResource("2_3ffrt")
+
+[node name="PickupRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
+shape = SubResource("RectangleShape2D_kntkr")
+
+[connection signal="body_entered" from="PickupRadius" to="." method="_on_pickup_radius_body_entered"]

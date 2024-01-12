@@ -364,6 +364,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(16, -20)
+collision_mask = 30
 script = ExtResource("1_5qksl")
 
 [node name="HeadRunning" type="AnimatedSprite2D" parent="."]

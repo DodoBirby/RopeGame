@@ -10,6 +10,8 @@ size = Vector2(126, 128)
 size = Vector2(222, 218)
 
 [node name="RopeConstruct" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 28
 script = ExtResource("1_5enb5")
 metadata/_edit_group_ = true
 
@@ -23,6 +25,7 @@ shape = SubResource("RectangleShape2D_gm5gu")
 zoom = Vector2(0.5, 0.5)
 
 [node name="PickupBox" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupBox"]
 shape = SubResource("RectangleShape2D_pf7tw")

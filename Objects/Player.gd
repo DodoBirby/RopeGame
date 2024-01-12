@@ -6,7 +6,12 @@ var PULLFORCE = 0.5
 var JUMP_HEIGHT: float = 130
 var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300
+var INVINCIBILITY_FRAMES = 60
 var tetherlength = 500
+var health = 2
+var maxhealth = 2
+var invincibility = 0
+
 
 
 # Don't touch these, these are controlled by JUMP_HEIGHT and TIME_TO_PEAK above
@@ -19,6 +24,8 @@ var active = true
 
 
 enum STATES {AIRBORNE, GROUNDED, INACTIVE}
+
+signal PLAYERDIED
 
 var tetherpoint: RopeConstruct
 
@@ -114,6 +121,9 @@ func enter_state(newstate) -> void:
 Runs per frame state logic
 '''
 func state_tick(delta) -> void:
+	
+	if invincibility > 0:
+		invincibility -= 1
 	match state:
 		STATES.GROUNDED:
 			grounded_tick(delta)
@@ -149,3 +159,19 @@ func throw(angle):
 	var throwvector = Vector2.UP.rotated(angle)
 	velocity = throwvector * THROWFORCE
 	position += throwvector * 100
+
+func die():
+	
+	emit_signal("PLAYERDIED")
+	#TODO Respawn
+
+func take_damage():
+	if invincibility <= 0:
+		invincibility = INVINCIBILITY_FRAMES
+		health -= 1
+		print(health)
+		if health <= 0:
+			die()
+
+func rope_pickup():
+	tetherlength += 50

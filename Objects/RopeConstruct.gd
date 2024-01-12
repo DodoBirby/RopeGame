@@ -52,11 +52,13 @@ func dormant_tick(delta):
 	velocity.x = 0
 	velocity.y += GRAVITY * delta
 	if awake:
+		set_collision_layer_value(2, false)
 		modulate = Color(1, 1, 1)
-		if colliding:
+		if colliding and Input.is_action_just_pressed("Up"):
 			player.active = false
 			change_state(STATES.GROUNDED)
 	else:
+		set_collision_layer_value(2, true)
 		modulate = Color(0, 0, 0)
 	move_and_slide()
 

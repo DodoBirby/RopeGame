@@ -43,6 +43,14 @@ Throw={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Grandpa"
+2d_physics/layer_3="Enemies"
+2d_physics/layer_4="Platforms"
+2d_physics/layer_5="Pickups"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
