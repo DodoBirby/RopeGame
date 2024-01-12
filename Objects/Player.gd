@@ -1,17 +1,22 @@
 class_name Player
 extends CharacterBody2D
 # Things to modify
-var MOVESPEED = 400
+var MOVESPEED = 450
 var PULLFORCE = 0.5
 var JUMP_HEIGHT: float = 130
 var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300
-var INVINCIBILITY_FRAMES = 60
+var INVINCIBILITY_FRAMES = 150
 var tetherlength = 500
 var health = 2
 var maxhealth = 2
 var invincibility = 0
-var facing = false
+var clapcooldown = 60
+var coyotetime = 0
+
+# Control Vars
+var interact = "Down"
+
 
 # Animator vars
 @onready var spritehead = $SpriteController/Head
@@ -22,7 +27,14 @@ var facing = false
 @onready var spritearma = $SpriteController/ForegroundArm
 var groupbody = &"Idle"
 var grouparms = &"Idle" 
-
+var facing = false
+var cangrab = false
+var idle = true
+var animspeed = 3
+var isclapping = false
+var isgrabbing = false
+var hurtframe = 0
+var hurtdir = 1
 
 # Don't touch these, these are controlled by JUMP_HEIGHT and TIME_TO_PEAK above
 var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
@@ -59,23 +71,20 @@ Grounded state tick function
 '''
 func grounded_tick(delta):
 	var dir = 0
+	coyotetime = 8
 	if Input.is_action_pressed("Left"):
 		dir = -1
 		facing = true
-		groupbody = "Run"
-		grouparms = "Run"
+		idle = false
 	elif Input.is_action_pressed("Right"):
 		dir = 1
 		facing = false
-		groupbody = "Run"
-		grouparms = "Run"
+		idle = false
 	else:
-		groupbody = "Idle"
-		grouparms = "Idle"
+		idle = true
 	if Input.is_action_just_pressed("Up"):
 		velocity.y = -JUMPFORCE
-	if Input.is_action_just_pressed("Down"):
-		tetherpoint.clap()
+		coyotetime = 0
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
 	var tethervector = tetherpoint.position - position
 	if (tethervector.length() > tetherlength + 20):
@@ -97,8 +106,10 @@ func airborne_tick(delta):
 		facing = false
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
+	elif coyotetime > 0:
+		velocity.y = -JUMPFORCE
 	if Input.is_action_just_pressed("Down"):
-		tetherpoint.clap()
+		pass
 	if dir != 0:
 		var speedcap
 		if dir == 1:
@@ -117,6 +128,8 @@ func airborne_tick(delta):
 	if (tethervector.length() > tetherlength + 20):
 		position += tethervector.normalized() * (tethervector.length() - tetherlength - 20)
 	move_and_slide()
+	if coyotetime > 0:
+		coyotetime -= 1
 '''
 Called when a state transition needs to occur
 '''
@@ -188,6 +201,7 @@ func die():
 	#TODO Respawn
 
 func take_damage():
+	hurtframe = 30
 	if invincibility <= 0:
 		invincibility = INVINCIBILITY_FRAMES
 		health -= 1
@@ -198,28 +212,72 @@ func take_damage():
 func rope_pickup():
 	tetherlength += 50
 
-func animator(delta):
+# Xander's Insane animator function
 
+func animator(delta):
+	
+	if clapcooldown > 0:
+		clapcooldown -= 1
+	
 	if state == STATES.AIRBORNE:
 		groupbody = "Jump"
 		grouparms = "Jump"
+		if isclapping:
+			isclapping = false
+		
 		if spritebody.frame == 4:
 			spritehead.frame = 4
 			spritebody.frame = 4
 			spritelegs.frame = 4
 			spritearms.frame = 4
+		
+	if state == STATES.GROUNDED:
+		if Input.is_action_just_pressed(interact):
+			if clapcooldown == 0 && cangrab == false && !isgrabbing:
+				clapcooldown = 15 * animspeed
+				isclapping = true
 			
+		if idle == true:
+			grouparms = "Idle"
+			groupbody = "Idle"
+		else:
+			if Input.is_action_pressed("Left") || Input.is_action_pressed("Right"):
+				groupbody = "Run"
+				grouparms = "Run"
 			
+		if isclapping:
+			grouparms = "Clap"
+			if clapcooldown == 8 * animspeed:
+				tetherpoint.clap()
+				
+			if spritearms.animation == "Clap" && spritearms.frame == 8:
+				isclapping = false
 			
-	spritehead.play(groupbody, 2)
-	spritebody.play(groupbody, 2)
-	spritelegs.play(groupbody, 2)
-	spritearms.play(grouparms, 2)
-	spritearma.play(grouparms, 2)
-	spritearmb.play(grouparms, 2)
+		if isgrabbing:
+			grouparms = "Grab"
+			if spritearms.frame == 4:
+				spritearms.frame = 4
+				spritearma.frame = 4 
+	if hurtframe > 0:
+		hurtframe -= 1
+		groupbody = "Hurt"
+		grouparms = ""
+	spritehead.play(groupbody, animspeed)
+	spritebody.play(groupbody, animspeed)
+	spritelegs.play(groupbody, animspeed)
+	spritearms.play(grouparms, animspeed)
+	spritearma.play(grouparms, animspeed)
+	spritearmb.play(grouparms, animspeed)
 	spritehead.flip_h = facing
 	spritebody.flip_h = facing
 	spritelegs.flip_h = facing
 	spritearma.flip_h = facing
 	spritearmb.flip_h = facing
 	spritearms.flip_h = facing
+	
+# Eventual "Mount the Construct" function.
+func mount():
+	# timer and physics to move the player up to the mount spot
+	# puff of smoke effect over the mount spot to hide the player disappearing
+		# make player inactive, change state on construct from Dormant to Grounded
+	pass

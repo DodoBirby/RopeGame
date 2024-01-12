@@ -8,7 +8,6 @@ var awake = false
 var prevdir = -1
 var colliding = false
 
-
 func _ready():
 	# Ok to touch
 	MOVESPEED = 360
@@ -76,7 +75,7 @@ func grounded_tick(delta):
 		player.throw(prevdir * PI / 4)
 		awake = false
 		change_state(STATES.DORMANT)
-		
+	
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
 	move_and_slide()
 
@@ -111,7 +110,8 @@ func state_transition():
 	return null
 
 func clap():
-	awake = !awake
+		awake = !awake
+		print("Calling func clap()")
 
 
 
