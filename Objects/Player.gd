@@ -1,13 +1,13 @@
 class_name Player
 extends CharacterBody2D
 # Things to modify
-var MOVESPEED = 450
+var MOVESPEED = 450.0
 var PULLFORCE = 0.5
 var JUMP_HEIGHT: float = 130
 var TIME_TO_PEAK: float = 0.5
-var THROWFORCE = 1300
+var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 150
-var tetherlength = 500
+var tetherlength = 500.0
 var health = 99
 var maxhealth = 2
 var invincibility = 0
@@ -20,6 +20,7 @@ var THROWN_FRAMES = 10
 var interact = "Down"
 
 @onready var collision= $BodyCollider
+@onready var ropeattach = $RopeAttachPoint
 
 
 # Animator vars
@@ -57,6 +58,9 @@ signal PLAYERDAMAGED
 
 var tetherpoint: RopeConstruct
 var camera: PlayerCam
+
+func _process(delta):
+	queue_redraw()
 
 func _ready():
 	tetherpoint = construct_scene.instantiate()
@@ -208,7 +212,7 @@ func throw(angle):
 	change_state(STATES.AIRBORNE)
 	position = tetherpoint.position
 	var throwvector = Vector2.UP.rotated(angle)
-	velocity = throwvector * THROWFORCE
+	velocity = throwvector * THROWFORCE * (tetherlength / 500.0)
 	position += throwvector * 100
 
 func die():
@@ -310,3 +314,6 @@ func play_if_valid(sprite: AnimatedSprite2D, animation: String, animspeed):
 	if sprite.sprite_frames.has_animation(animation):
 		sprite.play(animation, animspeed)
 
+func _draw():
+	if active:
+		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.64), 5)

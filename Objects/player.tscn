@@ -1850,6 +1850,7 @@ animations = [{
 size = Vector2(6.99996, 3.83993)
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 texture_filter = 2
 collision_mask = 30
 script = ExtResource("1_5qksl")
@@ -1904,3 +1905,6 @@ shape = SubResource("RectangleShape2D_ucwv2")
 enabled = false
 
 [node name="Colliders" type="Node2D" parent="."]
+
+[node name="RopeAttachPoint" type="Node2D" parent="."]
+position = Vector2(35, 38)
