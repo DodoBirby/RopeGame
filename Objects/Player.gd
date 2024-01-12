@@ -8,7 +8,7 @@ var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300
 var INVINCIBILITY_FRAMES = 150
 var tetherlength = 500
-var health = 2
+var health = 99
 var maxhealth = 2
 var invincibility = 0
 var clapcooldown = 60
@@ -208,6 +208,8 @@ func die():
 
 func take_damage():
 	hurtframe = 30
+	#TODO add direction the player took damage from, send away from source and set `hurtdir` appropriately. remove player control while in hurtframes.
+	hurtdir = 0
 	if invincibility <= 0:
 		invincibility = INVINCIBILITY_FRAMES
 		health -= 1
@@ -267,27 +269,33 @@ func animator(delta):
 	if hurtframe > 0:
 		hurtframe -= 1
 		groupbody = "Hurt"
-		grouparms = ""
+		grouparms = "Void"
+		spritehead.frame = hurtdir
+		spritebody.frame = hurtdir
+		spritelegs.frame = hurtdir
+	
 	play_if_valid(spritehead, groupbody, animspeed)
 	play_if_valid(spritebody, groupbody, animspeed)
 	play_if_valid(spritelegs, groupbody, animspeed)
 	play_if_valid(spritearms, grouparms, animspeed)
 	play_if_valid(spritearma, grouparms, animspeed)
 	play_if_valid(spritearmb, grouparms, animspeed)
+	
 	spritehead.flip_h = facing
 	spritebody.flip_h = facing
 	spritelegs.flip_h = facing
 	spritearma.flip_h = facing
 	spritearmb.flip_h = facing
 	spritearms.flip_h = facing
-	
-# Eventual "Mount the Construct" function.
+
+# TODO Eventual "Mount the Construct" function.
 func mount():
 	# timer and physics to move the player up to the mount spot
 	# puff of smoke effect over the mount spot to hide the player disappearing
 		# make player inactive, change state on construct from Dormant to Grounded
 	pass
-
+	
 func play_if_valid(sprite: AnimatedSprite2D, animation: String, animspeed):
 	if sprite.sprite_frames.has_animation(animation):
 		sprite.play(animation, animspeed)
+
