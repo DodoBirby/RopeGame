@@ -11,15 +11,18 @@ var tetherlength = 500
 var health = 2
 var maxhealth = 2
 var invincibility = 0
-var running = 0
+var facing = false
 
 # Animator vars
-@onready var spritehead = $SpriteController/Head.Animation
-@onready var spritebody = $SpriteController/Torso.Animation
-@onready var spritelegs = $SpriteController/Legs.Animation
-@onready var spritearms = $SpriteController/BodyArm.Animation
-@onready var spritearmb = $SpriteController/BackgroundArm.Animation
-@onready var spritearma = $SpriteController/ForegroundArm.Animation
+@onready var spritehead = $SpriteController/Head
+@onready var spritebody = $SpriteController/Torso
+@onready var spritelegs = $SpriteController/Legs
+@onready var spritearms = $SpriteController/BodyArm
+@onready var spritearmb = $SpriteController/BackgroundArm
+@onready var spritearma = $SpriteController/ForegroundArm
+var groupbody = &"Idle"
+var grouparms = &"Idle" 
+
 
 # Don't touch these, these are controlled by JUMP_HEIGHT and TIME_TO_PEAK above
 var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
@@ -49,6 +52,7 @@ func _physics_process(delta):
 	var transition = state_transition()
 	if transition != null:
 		change_state(transition)
+	animator(delta)
 
 '''
 Grounded state tick function
@@ -57,12 +61,17 @@ func grounded_tick(delta):
 	var dir = 0
 	if Input.is_action_pressed("Left"):
 		dir = -1
-		running = true
+		facing = true
+		groupbody = "Run"
+		grouparms = "Run"
 	elif Input.is_action_pressed("Right"):
 		dir = 1
-		running = true
+		facing = false
+		groupbody = "Run"
+		grouparms = "Run"
 	else:
-		running = false
+		groupbody = "Idle"
+		grouparms = "Idle"
 	if Input.is_action_just_pressed("Up"):
 		velocity.y = -JUMPFORCE
 	if Input.is_action_just_pressed("Down"):
@@ -82,8 +91,10 @@ func airborne_tick(delta):
 	var gravmultiplier = 1
 	if Input.is_action_pressed("Left"):
 		dir = -1
+		facing = true
 	elif Input.is_action_pressed("Right"):
 		dir = 1
+		facing = false
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
 	if Input.is_action_just_pressed("Down"):
@@ -186,3 +197,29 @@ func take_damage():
 
 func rope_pickup():
 	tetherlength += 50
+
+func animator(delta):
+
+	if state == STATES.AIRBORNE:
+		groupbody = "Jump"
+		grouparms = "Jump"
+		if spritebody.frame == 4:
+			spritehead.frame = 4
+			spritebody.frame = 4
+			spritelegs.frame = 4
+			spritearms.frame = 4
+			
+			
+			
+	spritehead.play(groupbody, 2)
+	spritebody.play(groupbody, 2)
+	spritelegs.play(groupbody, 2)
+	spritearms.play(grouparms, 2)
+	spritearma.play(grouparms, 2)
+	spritearmb.play(grouparms, 2)
+	spritehead.flip_h = facing
+	spritebody.flip_h = facing
+	spritelegs.flip_h = facing
+	spritearma.flip_h = facing
+	spritearmb.flip_h = facing
+	spritearms.flip_h = facing
