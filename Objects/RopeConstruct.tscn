@@ -24,9 +24,6 @@ texture = ExtResource("2_fixk6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_gm5gu")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.5, 0.5)
-
 [node name="PickupBox" type="Area2D" parent="."]
 collision_layer = 2
 

@@ -44,4 +44,31 @@ position = Vector2(269, 335)
 [node name="RopePickup4" parent="." instance=ExtResource("5_pleuh")]
 position = Vector2(91, 406)
 
+[node name="RopePickup5" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(144, 303)
+
+[node name="RopePickup6" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(84, 318)
+
+[node name="RopePickup7" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(-11, 351)
+
+[node name="RopePickup8" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(-78, 420)
+
+[node name="RopePickup9" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(241, 420)
+
+[node name="RopePickup10" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(370, 345)
+
+[node name="RopePickup11" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(347, 434)
+
+[node name="RopePickup12" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(334, 280)
+
+[node name="RopePickup13" parent="." instance=ExtResource("5_pleuh")]
+position = Vector2(259, 253)
+
 [connection signal="PLAYERDIED" from="Player" to="HUD" method="_on_player_playerdied"]

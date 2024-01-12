@@ -19,6 +19,8 @@ var THROWN_FRAMES = 10
 # Control Vars
 var interact = "Down"
 
+@onready var collision= $BodyCollider
+
 
 # Animator vars
 @onready var spritehead = $SpriteController/Head
@@ -51,14 +53,20 @@ var active = true
 enum STATES {AIRBORNE, GROUNDED, INACTIVE}
 
 signal PLAYERDIED
+signal PLAYERDAMAGED
 
 var tetherpoint: RopeConstruct
+var camera: PlayerCam
 
 func _ready():
 	tetherpoint = construct_scene.instantiate()
 	get_parent().add_child.call_deferred(tetherpoint)
 	tetherpoint.position = position
 	tetherpoint.player = self
+	camera = camera_scene.instantiate()
+	get_parent().add_child.call_deferred(camera)
+	camera.player = self
+	camera.construct = tetherpoint
 '''
 Runs once every frame (60fps)
 '''
@@ -147,6 +155,7 @@ Runs when a state is exited
 func exit_state(oldstate) -> void:
 	match oldstate:
 		STATES.INACTIVE:
+			collision.disabled = false
 			visible = true
 
 '''
@@ -170,8 +179,9 @@ func state_tick(delta) -> void:
 		STATES.AIRBORNE:
 			airborne_tick(delta)
 		STATES.INACTIVE:
+			collision.disabled = true
 			visible = false
-			position = Vector2(-100, -100)
+			position = tetherpoint.position
 '''
 Returns a state to transition to on this frame
 '''
@@ -213,12 +223,13 @@ func take_damage():
 	if invincibility <= 0:
 		invincibility = INVINCIBILITY_FRAMES
 		health -= 1
+		emit_signal("PLAYERDAMAGED")
 		print(health)
 		if health <= 0:
 			die()
 
 func rope_pickup():
-	tetherlength += 50
+	tetherlength += 100
 
 # Xander's Insane animator function
 
