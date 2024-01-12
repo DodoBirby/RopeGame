@@ -20,6 +20,11 @@ animations = [{
 "loop": true,
 "name": &"Swinging",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Void",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y1ry7"]
@@ -452,6 +457,11 @@ animations = [{
 }],
 "loop": true,
 "name": &"Swinging",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Void",
 "speed": 5.0
 }]
 
@@ -886,6 +896,11 @@ animations = [{
 "loop": true,
 "name": &"Swinging",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Void",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1xnm2"]
@@ -1319,6 +1334,11 @@ animations = [{
 "loop": true,
 "name": &"Swinging",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Void",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gdpob"]
@@ -1660,6 +1680,11 @@ animations = [{
 "loop": true,
 "name": &"Run",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Void",
+"speed": 5.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwub4"]
@@ -1844,6 +1869,11 @@ animations = [{
 "loop": true,
 "name": &"Swinging",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Void",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucwv2"]
@@ -1860,37 +1890,35 @@ position = Vector2(-9, -19)
 scale = Vector2(4, 4)
 
 [node name="BackgroundArm" type="AnimatedSprite2D" parent="SpriteController"]
-visible = false
 sprite_frames = SubResource("SpriteFrames_ybsl4")
-animation = &"Swinging"
+animation = &"Void"
 centered = false
 
 [node name="Head" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_qcsk7")
-animation = &"Jump"
+animation = &"Void"
 centered = false
 
 [node name="Legs" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_3aomn")
-animation = &"Jump"
+animation = &"Void"
 centered = false
 
 [node name="Torso" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_xrssi")
-animation = &"Jump"
+animation = &"Void"
 centered = false
 
 [node name="BodyArm" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_y0bty")
-animation = &"Jump"
+animation = &"Void"
 centered = false
 
 [node name="ForegroundArm" type="AnimatedSprite2D" parent="SpriteController"]
-visible = false
 z_index = 2
 z_as_relative = false
 sprite_frames = SubResource("SpriteFrames_jtyn5")
-animation = &"Pulling"
+animation = &"Void"
 centered = false
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
