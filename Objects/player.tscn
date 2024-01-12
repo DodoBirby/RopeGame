@@ -1867,7 +1867,7 @@ centered = false
 
 [node name="Head" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_qcsk7")
-animation = &"Jump"
+animation = &"Idle"
 centered = false
 
 [node name="Legs" type="AnimatedSprite2D" parent="SpriteController"]

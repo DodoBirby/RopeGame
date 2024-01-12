@@ -13,6 +13,8 @@ var maxhealth = 2
 var invincibility = 0
 var clapcooldown = 60
 var coyotetime = 0
+var thrown = 0
+var THROWN_FRAMES = 10
 
 # Control Vars
 var interact = "Down"
@@ -41,6 +43,7 @@ var GRAVITY = 2.0 * JUMP_HEIGHT / pow(TIME_TO_PEAK, 2)
 var JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 
 var construct_scene: PackedScene = preload("res://Objects/RopeConstruct.tscn")
+var camera_scene: PackedScene = preload("res://Objects/player_camera.tscn")
 var state = STATES.GROUNDED
 var active = true
 
@@ -159,6 +162,8 @@ func state_tick(delta) -> void:
 	
 	if invincibility > 0:
 		invincibility -= 1
+	if thrown > 0:
+		thrown -= 1
 	match state:
 		STATES.GROUNDED:
 			grounded_tick(delta)
@@ -188,6 +193,7 @@ func state_transition():
 	return null
 
 func throw(angle):
+	thrown = THROWN_FRAMES
 	active = true
 	change_state(STATES.AIRBORNE)
 	position = tetherpoint.position
@@ -262,12 +268,12 @@ func animator(delta):
 		hurtframe -= 1
 		groupbody = "Hurt"
 		grouparms = ""
-	spritehead.play(groupbody, animspeed)
-	spritebody.play(groupbody, animspeed)
-	spritelegs.play(groupbody, animspeed)
-	spritearms.play(grouparms, animspeed)
-	spritearma.play(grouparms, animspeed)
-	spritearmb.play(grouparms, animspeed)
+	play_if_valid(spritehead, groupbody, animspeed)
+	play_if_valid(spritebody, groupbody, animspeed)
+	play_if_valid(spritelegs, groupbody, animspeed)
+	play_if_valid(spritearms, grouparms, animspeed)
+	play_if_valid(spritearma, grouparms, animspeed)
+	play_if_valid(spritearmb, grouparms, animspeed)
 	spritehead.flip_h = facing
 	spritebody.flip_h = facing
 	spritelegs.flip_h = facing
@@ -281,3 +287,7 @@ func mount():
 	# puff of smoke effect over the mount spot to hide the player disappearing
 		# make player inactive, change state on construct from Dormant to Grounded
 	pass
+
+func play_if_valid(sprite: AnimatedSprite2D, animation: String, animspeed):
+	if sprite.sprite_frames.has_animation(animation):
+		sprite.play(animation, animspeed)

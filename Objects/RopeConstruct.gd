@@ -7,6 +7,7 @@ enum STATES {AIRBORNE, GROUNDED, DORMANT}
 var awake = false
 var prevdir = -1
 var colliding = false
+var noclap = false
 
 func _ready():
 	# Ok to touch
@@ -110,9 +111,10 @@ func state_transition():
 	return null
 
 func clap():
+	if not noclap:
 		awake = !awake
 		print("Calling func clap()")
-
+		
 
 
 func _on_pickup_box_body_entered(body):
@@ -123,3 +125,13 @@ func _on_pickup_box_body_entered(body):
 func _on_pickup_box_body_exited(body):
 	if body is Player:
 		colliding = false
+
+
+func _on_no_clap_box_body_entered(body):
+	if body is Player:
+		noclap = true
+
+
+func _on_no_clap_box_body_exited(body):
+	if body is Player:
+		noclap = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2am0ffc371cy"]
+[gd_scene load_steps=6 format=3 uid="uid://c2am0ffc371cy"]
 
 [ext_resource type="Script" path="res://Objects/RopeConstruct.gd" id="1_5enb5"]
 [ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="2_fixk6"]
@@ -8,6 +8,9 @@ size = Vector2(126, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pf7tw"]
 size = Vector2(222, 218)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sqg2r"]
+size = Vector2(104, 114)
 
 [node name="RopeConstruct" type="CharacterBody2D"]
 collision_layer = 2
@@ -30,5 +33,12 @@ collision_layer = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupBox"]
 shape = SubResource("RectangleShape2D_pf7tw")
 
+[node name="NoClapBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoClapBox"]
+shape = SubResource("RectangleShape2D_sqg2r")
+
 [connection signal="body_entered" from="PickupBox" to="." method="_on_pickup_box_body_entered"]
 [connection signal="body_exited" from="PickupBox" to="." method="_on_pickup_box_body_exited"]
+[connection signal="body_entered" from="NoClapBox" to="." method="_on_no_clap_box_body_entered"]
+[connection signal="body_exited" from="NoClapBox" to="." method="_on_no_clap_box_body_exited"]
