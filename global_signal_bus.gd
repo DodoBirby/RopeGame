@@ -2,6 +2,7 @@ extends Node
 signal camerashake(strength)
 signal PLAYERDAMAGED
 signal PLAYERDIED
+signal cameralimits(rect)
 
 func shake_camera(strength):
 	emit_signal("camerashake", strength)
@@ -9,3 +10,5 @@ func shake_camera(strength):
 func player_damaged():
 	emit_signal("PLAYERDAMAGED")
 
+func cameralimitset(rect: Rect2):
+	emit_signal("cameralimits", rect)

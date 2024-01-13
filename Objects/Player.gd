@@ -230,10 +230,9 @@ func throw(angle):
 	thrown = THROWN_FRAMES
 	active = true
 	change_state(STATES.AIRBORNE)
-	position = tetherpoint.position
+	position = tetherpoint.position + Vector2.UP * 120
 	var throwvector = Vector2.UP.rotated(angle)
 	velocity = throwvector * THROWFORCE * (tetherlength / 500.0)
-	position += throwvector * 100
 
 func die():
 	
@@ -254,7 +253,7 @@ func take_damage():
 			die()
 
 func rope_pickup():
-	tetherlength += 100
+	tetherlength += 200
 
 # Xander's Insane animator function
 

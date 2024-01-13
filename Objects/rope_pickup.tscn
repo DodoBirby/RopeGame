@@ -7,7 +7,7 @@
 size = Vector2(132, 131.459)
 
 [node name="RopePickup" type="Sprite2D"]
-scale = Vector2(0.5, 0.578125)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_0atpf")
 script = ExtResource("2_3ffrt")
 

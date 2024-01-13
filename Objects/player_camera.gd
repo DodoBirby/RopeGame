@@ -23,7 +23,7 @@ func _ready():
 	viewport_rect = get_viewport_rect()
 	GlobalSignalBus.PLAYERDAMAGED.connect(shake)
 	GlobalSignalBus.camerashake.connect(shake_with_strength)
-	
+	GlobalSignalBus.cameralimits.connect(setcamlimits)
 func _process(delta):
 	
 	if not player or not construct:
@@ -52,6 +52,12 @@ func shake():
 
 func shake_with_strength(strength):
 	shake_strength = strength
+
+func setcamlimits(rect: Rect2):
+	limit_bottom = rect.end.y
+	limit_left = rect.position.x
+	limit_right = rect.end.x
+	limit_top = rect.position.y
 
 func randomoffset() -> Vector2:
 	return Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))

@@ -11,13 +11,13 @@
 size = Vector2(87, 129)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pf7tw"]
-size = Vector2(222, 218)
+size = Vector2(141, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqg2r"]
-size = Vector2(104, 114)
+size = Vector2(83, 121)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e4djp"]
-size = Vector2(124, 126)
+size = Vector2(83, 125)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hewve"]
 atlas = ExtResource("3_t86un")
@@ -873,6 +873,7 @@ shape = SubResource("RectangleShape2D_gm5gu")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupBox"]
+position = Vector2(-10.5, -3)
 shape = SubResource("RectangleShape2D_pf7tw")
 
 [node name="NoClapBox" type="Area2D" parent="."]
@@ -880,6 +881,7 @@ collision_layer = 0
 collision_mask = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoClapBox"]
+position = Vector2(-10.5, -3.5)
 shape = SubResource("RectangleShape2D_sqg2r")
 
 [node name="NoMountBox" type="Area2D" parent="."]
@@ -887,6 +889,7 @@ collision_layer = 0
 collision_mask = 44
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoMountBox"]
+position = Vector2(-9.5, -3.5)
 shape = SubResource("RectangleShape2D_e4djp")
 
 [node name="CompositeSprite" type="Node2D" parent="."]
