@@ -135,7 +135,12 @@ func clap():
 	if not NoClapBox.has_overlapping_bodies():
 		awake = !awake
 		print("Calling func clap()")
-		
+
+func take_damage():
+	if state != STATES.DORMANT:
+		player.dismount()
+		awake = false
+		change_state(STATES.DORMANT)
 
 
 func _on_pickup_box_body_entered(body):

@@ -338,6 +338,13 @@ func play_if_valid(sprite: AnimatedSprite2D, animation: String, animspeed):
 	if sprite.sprite_frames.has_animation(animation):
 		sprite.play(animation, animspeed)
 
+func dismount():
+	active = true
+	change_state(STATES.AIRBORNE)
+	position = tetherpoint.position
+	var throwvector = Vector2.UP
+	position += throwvector * 120
+
 func _draw():
 	if active:
 		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.64), 5)
