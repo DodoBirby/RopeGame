@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Things to modify
 var MOVESPEED = 450.0
 var PULLFORCE = 0.5
-var JUMP_HEIGHT: float = 130
+var JUMP_HEIGHT: float = 138
 var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 150

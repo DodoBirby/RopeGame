@@ -1,5 +1,6 @@
 class_name RopeConstruct
 extends Construct
+#TODO Add coyote and jump buffer
 
 enum STATES {AIRBORNE, GROUNDED, DORMANT}
 
@@ -16,7 +17,7 @@ var PUSH_FORCE = 100.0
 func _ready():
 	# Ok to touch
 	MOVESPEED = 360
-	JUMP_HEIGHT = 60
+	JUMP_HEIGHT = 70
 	TIME_TO_PEAK = 0.2
 	
 	# Don't touch
@@ -89,6 +90,10 @@ func grounded_tick(delta):
 		prevdir = 1
 	if Input.is_action_just_pressed("Up"):
 		velocity.y = -JUMPFORCE
+	if Input.is_action_just_pressed("Down"):
+		player.dismount()
+		awake = false
+		change_state(STATES.DORMANT)
 	if Input.is_action_just_pressed("Throw"):
 		player.throw(prevdir * PI / 4)
 		awake = false
@@ -106,17 +111,14 @@ func grounded_tick(delta):
 
 func airborne_tick(delta):
 	var dir = 0
-	var gravmultiplier = 1
 	if Input.is_action_pressed("Left"):
 		dir = -1
 		prevdir = -1
 	elif Input.is_action_pressed("Right"):
 		dir = 1
 		prevdir = 1
-	if not Input.is_action_pressed("Up"):
-		gravmultiplier = 3
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
-	velocity.y += GRAVITY * delta * gravmultiplier
+	velocity.y += GRAVITY * delta
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
