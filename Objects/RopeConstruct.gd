@@ -9,6 +9,7 @@ var prevdir = -1
 var colliding = false
 
 @onready var NoClapBox = $NoClapBox
+@onready var NoMountBox = $NoMountBox
 
 var PUSH_FORCE = 100.0
 
@@ -31,6 +32,8 @@ Runs when a state is exited
 func exit_state(oldstate) -> void:
 	match oldstate:
 		STATES.DORMANT:
+			set_collision_layer_value(2, true)
+			set_collision_mask_value(6, true)
 			modulate = Color(1, 1, 1)
 
 '''
@@ -58,7 +61,7 @@ func dormant_tick(delta):
 		set_collision_layer_value(2, false)
 		set_collision_mask_value(6, false)
 		modulate = Color(1, 1, 1)
-		if colliding and Input.is_action_just_pressed("Up"):
+		if colliding and Input.is_action_just_pressed("Up") and not NoMountBox.has_overlapping_bodies():
 			player.active = false
 			change_state(STATES.GROUNDED)
 	else:
