@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://khkpfwqtsp2q"
-path="res://.godot/imported/PlayerForeArmSheet.png-0cba3e14a4c2aadd47e5ccec812bbba7.ctex"
+uid="uid://bc07qyja1vkfc"
+path="res://.godot/imported/PlayerTorsoSheet.png-470ca3d07c3782556038b04f123dd5f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/PlayerForeArmSheet.png"
-dest_files=["res://.godot/imported/PlayerForeArmSheet.png-0cba3e14a4c2aadd47e5ccec812bbba7.ctex"]
+source_file="res://Assets/Character/PlayerTorsoSheet.png"
+dest_files=["res://.godot/imported/PlayerTorsoSheet.png-470ca3d07c3782556038b04f123dd5f4.ctex"]
 
 [params]
 

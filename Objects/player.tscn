@@ -1,11 +1,11 @@
 [gd_scene load_steps=247 format=3 uid="uid://vnywocngypip"]
 
 [ext_resource type="Script" path="res://Objects/Player.gd" id="1_5qksl"]
-[ext_resource type="Texture2D" uid="uid://bwmvsvbbvuy8s" path="res://Assets/PlayerHeadSheet.png" id="2_2xq00"]
-[ext_resource type="Texture2D" uid="uid://c013d5exah3om" path="res://Assets/PlayerLegsSheet.png" id="3_4mccu"]
-[ext_resource type="Texture2D" uid="uid://bc07qyja1vkfc" path="res://Assets/PlayerTorsoSheet.png" id="4_v24xw"]
-[ext_resource type="Texture2D" uid="uid://bo0foddgp5c1u" path="res://Assets/PlayerUnderArmSheet.png" id="5_osvwk"]
-[ext_resource type="Texture2D" uid="uid://khkpfwqtsp2q" path="res://Assets/PlayerForeArmSheet.png" id="6_ykfoh"]
+[ext_resource type="Texture2D" uid="uid://bwmvsvbbvuy8s" path="res://Assets/Character/PlayerHeadSheet.png" id="2_2xq00"]
+[ext_resource type="Texture2D" uid="uid://c013d5exah3om" path="res://Assets/Character/PlayerLegsSheet.png" id="3_4mccu"]
+[ext_resource type="Texture2D" uid="uid://bc07qyja1vkfc" path="res://Assets/Character/PlayerTorsoSheet.png" id="4_v24xw"]
+[ext_resource type="Texture2D" uid="uid://bo0foddgp5c1u" path="res://Assets/Character/PlayerUnderArmSheet.png" id="5_osvwk"]
+[ext_resource type="Texture2D" uid="uid://khkpfwqtsp2q" path="res://Assets/Character/PlayerForeArmSheet.png" id="6_ykfoh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_unef4"]
 atlas = ExtResource("5_osvwk")

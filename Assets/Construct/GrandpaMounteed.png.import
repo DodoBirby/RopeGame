@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwmvsvbbvuy8s"
-path="res://.godot/imported/PlayerHeadSheet.png-454da9685cb1a21b8a1c293acb942a60.ctex"
+uid="uid://c6hv64shhu5ft"
+path="res://.godot/imported/GrandpaMounteed.png-1a553140949c3451f955ad5a2b0e46f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/PlayerHeadSheet.png"
-dest_files=["res://.godot/imported/PlayerHeadSheet.png-454da9685cb1a21b8a1c293acb942a60.ctex"]
+source_file="res://Assets/Construct/GrandpaMounteed.png"
+dest_files=["res://.godot/imported/GrandpaMounteed.png-1a553140949c3451f955ad5a2b0e46f3.ctex"]
 
 [params]
 
