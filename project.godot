@@ -56,6 +56,7 @@ Throw={
 2d_physics/layer_3="Enemies"
 2d_physics/layer_4="Platforms"
 2d_physics/layer_5="Pickups"
+2d_physics/layer_6="Pushables"
 
 [rendering]
 

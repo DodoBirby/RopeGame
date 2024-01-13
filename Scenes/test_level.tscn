@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://br5kr8sihetai"]
+[gd_scene load_steps=8 format=3 uid="uid://br5kr8sihetai"]
 
 [ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="1_eas7b"]
 [ext_resource type="PackedScene" uid="uid://vnywocngypip" path="res://Objects/player.tscn" id="2_2wj1j"]
 [ext_resource type="PackedScene" uid="uid://ctgcni7frbq24" path="res://Scenes/hud.tscn" id="3_tn2xe"]
 [ext_resource type="PackedScene" uid="uid://cci638s5noq7b" path="res://Objects/enemy.tscn" id="4_vmhqa"]
 [ext_resource type="PackedScene" uid="uid://diw1h5do24n2v" path="res://Objects/rope_pickup.tscn" id="5_pleuh"]
+[ext_resource type="PackedScene" uid="uid://mxlq4te2qwgu" path="res://Objects/box.tscn" id="6_nfsd6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lran"]
 size = Vector2(1404, 126)
@@ -30,7 +31,7 @@ position = Vector2(465, 389)
 [node name="HUD" parent="." instance=ExtResource("3_tn2xe")]
 
 [node name="Enemy" parent="." instance=ExtResource("4_vmhqa")]
-position = Vector2(949, 435)
+position = Vector2(56, 403)
 
 [node name="RopePickup" parent="." instance=ExtResource("5_pleuh")]
 position = Vector2(725, 378)
@@ -70,5 +71,8 @@ position = Vector2(334, 280)
 
 [node name="RopePickup13" parent="." instance=ExtResource("5_pleuh")]
 position = Vector2(259, 253)
+
+[node name="Box" parent="." instance=ExtResource("6_nfsd6")]
+position = Vector2(606, 372)
 
 [connection signal="PLAYERDIED" from="Player" to="HUD" method="_on_player_playerdied"]

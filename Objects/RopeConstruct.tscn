@@ -14,7 +14,7 @@ size = Vector2(104, 114)
 
 [node name="RopeConstruct" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 28
+collision_mask = 60
 script = ExtResource("1_5enb5")
 metadata/_edit_group_ = true
 
@@ -31,6 +31,8 @@ collision_layer = 2
 shape = SubResource("RectangleShape2D_pf7tw")
 
 [node name="NoClapBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoClapBox"]
 shape = SubResource("RectangleShape2D_sqg2r")

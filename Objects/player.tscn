@@ -1852,7 +1852,7 @@ size = Vector2(6.99996, 3.83993)
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 texture_filter = 2
-collision_mask = 30
+collision_mask = 62
 script = ExtResource("1_5qksl")
 
 [node name="SpriteController" type="Node2D" parent="."]

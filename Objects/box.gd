@@ -1,0 +1,2 @@
+class_name PushBox
+extends RigidBody2D

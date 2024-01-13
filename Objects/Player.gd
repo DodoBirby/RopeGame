@@ -15,6 +15,7 @@ var clapcooldown = 60
 var coyotetime = 0
 var thrown = 0
 var THROWN_FRAMES = 10
+var PUSH_FORCE = 100.0
 
 # Control Vars
 var interact = "Down"
@@ -106,6 +107,10 @@ func grounded_tick(delta):
 	if (tethervector.length() > tetherlength + 20):
 		position += tethervector.normalized() * (tethervector.length() - tetherlength - 20)
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is PushBox:
+			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
 
 
 '''
@@ -144,6 +149,10 @@ func airborne_tick(delta):
 	if (tethervector.length() > tetherlength + 20):
 		position += tethervector.normalized() * (tethervector.length() - tetherlength - 20)
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is PushBox:
+			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
 	if coyotetime > 0:
 		coyotetime -= 1
 '''

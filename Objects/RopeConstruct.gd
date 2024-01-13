@@ -3,11 +3,14 @@ extends Construct
 
 enum STATES {AIRBORNE, GROUNDED, DORMANT}
 
-@export var player: Player
+var player: Player
 var awake = false
 var prevdir = -1
 var colliding = false
-var noclap = false
+
+@onready var NoClapBox = $NoClapBox
+
+var PUSH_FORCE = 100.0
 
 func _ready():
 	# Ok to touch
@@ -53,14 +56,20 @@ func dormant_tick(delta):
 	velocity.y += GRAVITY * delta
 	if awake:
 		set_collision_layer_value(2, false)
+		set_collision_mask_value(6, false)
 		modulate = Color(1, 1, 1)
 		if colliding and Input.is_action_just_pressed("Up"):
 			player.active = false
 			change_state(STATES.GROUNDED)
 	else:
 		set_collision_layer_value(2, true)
+		set_collision_mask_value(6, true)
 		modulate = Color(0, 0, 0)
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is PushBox:
+			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
 
 func grounded_tick(delta):
 	var dir = 0
@@ -79,6 +88,10 @@ func grounded_tick(delta):
 	
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is PushBox:
+			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
 
 
 func airborne_tick(delta):
@@ -95,6 +108,10 @@ func airborne_tick(delta):
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
 	velocity.y += GRAVITY * delta * gravmultiplier
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is PushBox:
+			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
 
 '''
 Returns a state to transition to on this frame
@@ -111,7 +128,7 @@ func state_transition():
 	return null
 
 func clap():
-	if not noclap:
+	if not NoClapBox.has_overlapping_bodies():
 		awake = !awake
 		print("Calling func clap()")
 		
@@ -125,13 +142,3 @@ func _on_pickup_box_body_entered(body):
 func _on_pickup_box_body_exited(body):
 	if body is Player:
 		colliding = false
-
-
-func _on_no_clap_box_body_entered(body):
-	if body is Player:
-		noclap = true
-
-
-func _on_no_clap_box_body_exited(body):
-	if body is Player:
-		noclap = false
