@@ -99,7 +99,7 @@ func grounded_tick(delta):
 		idle = false
 	else:
 		idle = true
-	if Input.is_action_just_pressed("Up"):
+	if Input.is_action_pressed("Up"):
 		velocity.y = -JUMPFORCE
 		coyotetime = 0
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
@@ -128,6 +128,7 @@ func airborne_tick(delta):
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
 	elif coyotetime > 0:
+		coyotetime = 0
 		velocity.y = -JUMPFORCE
 	if Input.is_action_just_pressed("Down"):
 		pass
