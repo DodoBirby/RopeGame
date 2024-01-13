@@ -72,8 +72,12 @@ func dormant_tick(delta):
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
-		if c.get_collider() is PushBox:
+		var collider = c.get_collider()
+		if collider is PushBox:
 			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
+		if collider is Enemy and c.get_normal() == Vector2.UP:
+			collider.take_damage()
+			
 
 func grounded_tick(delta):
 	var dir = 0
@@ -94,9 +98,11 @@ func grounded_tick(delta):
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
-		if c.get_collider() is PushBox:
+		var collider = c.get_collider()
+		if collider is PushBox:
 			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
-
+		if collider is Enemy and c.get_normal() == Vector2.UP:
+			collider.take_damage()
 
 func airborne_tick(delta):
 	var dir = 0
@@ -114,9 +120,11 @@ func airborne_tick(delta):
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
-		if c.get_collider() is PushBox:
+		var collider = c.get_collider()
+		if collider is PushBox:
 			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
-
+		if collider is Enemy and c.get_normal() == Vector2.UP:
+			collider.take_damage()
 '''
 Returns a state to transition to on this frame
 '''

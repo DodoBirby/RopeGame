@@ -12,6 +12,7 @@ texture = ExtResource("1_0atpf")
 script = ExtResource("2_3ffrt")
 
 [node name="PickupRadius" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
 shape = SubResource("RectangleShape2D_kntkr")

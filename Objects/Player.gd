@@ -18,7 +18,7 @@ var THROWN_FRAMES = 10
 var PUSH_FORCE = 100.0
 var jumpbuffer = 0
 var JUMP_BUFFER_FRAMES = 10
-
+var respawnpos: Vector2
 
 # Control Vars
 var interact = "Down"
@@ -248,7 +248,7 @@ func take_damage():
 		hurtframe = 30
 		invincibility = INVINCIBILITY_FRAMES
 		health -= 1
-		emit_signal("PLAYERDAMAGED")
+		GlobalSignalBus.player_damaged()
 		print(health)
 		if health <= 0:
 			die()

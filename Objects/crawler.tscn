@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://84poxtw0j0tm"]
+
+[ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="1_nl8h8"]
+[ext_resource type="Script" path="res://Objects/crawler.gd" id="1_x3lqd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5pjf"]
+size = Vector2(50, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ub6lq"]
+size = Vector2(52, 54)
+
+[node name="Crawler" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 47
+script = ExtResource("1_x3lqd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_nl8h8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_y5pjf")
+
+[node name="RayCast2DLeft" type="RayCast2D" parent="."]
+position = Vector2(-28, 24)
+target_position = Vector2(0, 13)
+collision_mask = 8
+hit_from_inside = true
+
+[node name="RayCast2DRight" type="RayCast2D" parent="."]
+position = Vector2(28, 24)
+target_position = Vector2(0, 13)
+collision_mask = 8
+hit_from_inside = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_ub6lq")
+
+[node name="RayCast2DWallLeft" type="RayCast2D" parent="."]
+position = Vector2(-31, 0)
+target_position = Vector2(-8, 0)
+collision_mask = 46
+hit_from_inside = true
+
+[node name="RayCast2DWallRight" type="RayCast2D" parent="."]
+position = Vector2(31, 0)
+target_position = Vector2(8, 0)
+collision_mask = 46
+hit_from_inside = true

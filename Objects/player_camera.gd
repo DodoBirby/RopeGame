@@ -17,20 +17,17 @@ var rng = RandomNumberGenerator.new()
 
 var shake_strength = 0.0
 
-var signal_connected = false
 
 func _ready():
 	enabled = true
 	viewport_rect = get_viewport_rect()
-
+	GlobalSignalBus.PLAYERDAMAGED.connect(shake)
+	GlobalSignalBus.camerashake.connect(shake_with_strength)
+	
 func _process(delta):
 	
 	if not player or not construct:
 		return
-	if not signal_connected:
-		signal_connected = true
-		player.PLAYERDAMAGED.connect(shake)
-	
 	var center = Vector2.ZERO
 	center.x = (player.position.x + construct.position.x) / 2
 	center.y = (player.position.y + construct.position.y) / 2
@@ -52,6 +49,9 @@ func _process(delta):
 	
 func shake():
 	shake_strength = RANDOM_STRENGTH
-	
+
+func shake_with_strength(strength):
+	shake_strength = strength
+
 func randomoffset() -> Vector2:
 	return Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))

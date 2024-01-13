@@ -28,20 +28,20 @@ texture = ExtResource("2_fixk6")
 shape = SubResource("RectangleShape2D_gm5gu")
 
 [node name="PickupBox" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupBox"]
 shape = SubResource("RectangleShape2D_pf7tw")
 
 [node name="NoClapBox" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoClapBox"]
 shape = SubResource("RectangleShape2D_sqg2r")
 
 [node name="NoMountBox" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 44
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoMountBox"]
