@@ -16,6 +16,9 @@ var coyotetime = 0
 var thrown = 0
 var THROWN_FRAMES = 10
 var PUSH_FORCE = 100.0
+var jumpbuffer = 0
+var JUMP_BUFFER_FRAMES = 10
+
 
 # Control Vars
 var interact = "Down"
@@ -99,8 +102,9 @@ func grounded_tick(delta):
 		idle = false
 	else:
 		idle = true
-	if Input.is_action_pressed("Up"):
+	if Input.is_action_just_pressed("Up") or jumpbuffer > 0:
 		velocity.y = -JUMPFORCE
+		jumpbuffer = 0
 		coyotetime = 0
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
 	var tethervector = tetherpoint.position - position
@@ -127,9 +131,13 @@ func airborne_tick(delta):
 		facing = false
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
-	elif coyotetime > 0:
-		coyotetime = 0
-		velocity.y = -JUMPFORCE
+	if Input.is_action_just_pressed("Up"):
+		if coyotetime > 0:
+			coyotetime = 0
+			velocity.y = -JUMPFORCE
+		else:
+			jumpbuffer = JUMP_BUFFER_FRAMES
+		
 	if Input.is_action_just_pressed("Down"):
 		pass
 	if dir != 0:
@@ -183,7 +191,8 @@ func enter_state(newstate) -> void:
 Runs per frame state logic
 '''
 func state_tick(delta) -> void:
-	
+	if jumpbuffer > 0:
+		jumpbuffer -= 1
 	if invincibility > 0:
 		invincibility -= 1
 	if thrown > 0:
