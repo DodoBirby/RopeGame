@@ -13,7 +13,7 @@ size = Vector2(222, 218)
 size = Vector2(104, 114)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e4djp"]
-size = Vector2(102, 114)
+size = Vector2(124, 126)
 
 [node name="RopeConstruct" type="CharacterBody2D"]
 collision_layer = 2

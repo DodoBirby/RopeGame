@@ -63,6 +63,7 @@ func dormant_tick(delta):
 		modulate = Color(1, 1, 1)
 		if colliding and Input.is_action_just_pressed("Up") and not NoMountBox.has_overlapping_bodies():
 			player.active = false
+			player.visible = false
 			change_state(STATES.GROUNDED)
 	else:
 		set_collision_layer_value(2, true)
