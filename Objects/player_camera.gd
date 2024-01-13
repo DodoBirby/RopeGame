@@ -28,6 +28,7 @@ func _process(delta):
 	if not player or not construct:
 		return
 	if not signal_connected:
+		signal_connected = true
 		player.PLAYERDAMAGED.connect(shake)
 	
 	var center = Vector2.ZERO

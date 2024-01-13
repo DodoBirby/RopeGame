@@ -24,6 +24,7 @@ var interact = "Down"
 
 
 # Animator vars
+@onready var spritecontroller = $SpriteController
 @onready var spritehead = $SpriteController/Head
 @onready var spritebody = $SpriteController/Torso
 @onready var spritelegs = $SpriteController/Legs
@@ -221,10 +222,11 @@ func die():
 	#TODO Respawn
 
 func take_damage():
-	hurtframe = 30
+	
 	#TODO add direction the player took damage from, send away from source and set `hurtdir` appropriately. remove player control while in hurtframes.
 	hurtdir = 0
 	if invincibility <= 0:
+		hurtframe = 30
 		invincibility = INVINCIBILITY_FRAMES
 		health -= 1
 		emit_signal("PLAYERDAMAGED")
@@ -238,7 +240,6 @@ func rope_pickup():
 # Xander's Insane animator function
 
 func animator(delta):
-	
 	if clapcooldown > 0:
 		clapcooldown -= 1
 	
@@ -281,7 +282,11 @@ func animator(delta):
 			if spritearms.frame == 4:
 				spritearms.frame = 4
 				spritearma.frame = 4 
+	spritecontroller.modulate = Color(1.0, 1.0, 1.0, 1.0) #Reset player transparency
+	if invincibility > 0:
+		spritecontroller.modulate = Color(1.0, 1.0, 1.0, 0.5) #Make player transparent when invincible
 	if hurtframe > 0:
+		
 		hurtframe -= 1
 		groupbody = "Hurt"
 		grouparms = "Void"
