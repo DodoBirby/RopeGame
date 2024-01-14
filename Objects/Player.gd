@@ -7,7 +7,7 @@ var JUMP_HEIGHT: float = 138
 var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 90
-var tetherlength = 500.0
+var tetherlength = 8
 var health = 99
 var maxhealth = 2
 var invincibility = 0
@@ -126,8 +126,8 @@ func grounded_tick(delta):
 		coyotetime = 0
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
 	var tethervector = tetherpoint.position - position
-	if (tethervector.length() > tetherlength + 20):
-		position += tethervector.normalized() * (tethervector.length() - tetherlength - 20)
+	if (tethervector.length() > tetherlength * 64 + 20):
+		position += tethervector.normalized() * (tethervector.length() - tetherlength * 64 - 20)
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -169,13 +169,13 @@ func airborne_tick(delta):
 	velocity.y += GRAVITY * delta * gravmultiplier
 	var tethervector = tetherpoint.position - position
 	var dotproduct = tethervector.normalized().dot(velocity)
-	if (dotproduct < 0 and tethervector.length() > tetherlength):
+	if (dotproduct < 0 and tethervector.length() > tetherlength * 64):
 		var multiplier = 1
 		if dotproduct < -300:
 			multiplier = 1.5
 		velocity += -dotproduct * tethervector.normalized() * multiplier
-	if (tethervector.length() > tetherlength + 20):
-		position += tethervector.normalized() * (tethervector.length() - tetherlength - 20)
+	if (tethervector.length() > tetherlength * 64 + 20):
+		position += tethervector.normalized() * (tethervector.length() - tetherlength * 64 - 20)
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -252,7 +252,7 @@ func throw(angle):
 	change_state(STATES.AIRBORNE)
 	position = tetherpoint.position + Vector2.UP * 140
 	var throwvector = Vector2.UP.rotated(angle)
-	velocity = throwvector * THROWFORCE * (tetherlength / 500.0)
+	velocity = throwvector * THROWFORCE * (tetherlength * 64 / 500.0)
 
 func die():
 	
@@ -273,7 +273,7 @@ func take_damage():
 			die()
 
 func rope_pickup():
-	tetherlength += 200
+	tetherlength += 3
 	pickupsound.play()
 
 # Xander's Insane animator function
