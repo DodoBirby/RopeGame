@@ -6,7 +6,7 @@ var PULLFORCE = 0.5
 var JUMP_HEIGHT: float = 138
 var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
-var INVINCIBILITY_FRAMES = 150
+var INVINCIBILITY_FRAMES = 90
 var tetherlength = 500.0
 var health = 99
 var maxhealth = 2
@@ -14,7 +14,7 @@ var invincibility = 0
 var clapcooldown = 60
 var coyotetime = 0
 var thrown = 0
-var THROWN_FRAMES = 10
+var THROWN_FRAMES = 400000
 var PUSH_FORCE = 100.0
 var jumpbuffer = 0
 var JUMP_BUFFER_FRAMES = 10
@@ -229,6 +229,7 @@ func state_transition():
 func throw(angle):
 	thrown = THROWN_FRAMES
 	active = true
+	print(thrown)
 	change_state(STATES.AIRBORNE)
 	position = tetherpoint.position + Vector2.UP * 120
 	var throwvector = Vector2.UP.rotated(angle)
@@ -266,13 +267,19 @@ func animator(delta):
 		grouparms = "Jump"
 		if isclapping:
 			isclapping = false
-		
 		if spritebody.frame == 4:
 			spritehead.frame = 4
 			spritebody.frame = 4
 			spritelegs.frame = 4
 			spritearms.frame = 4
-		
+		if thrown > 0:
+			groupbody = "Thrown"
+			if facing == true:
+				spritebody.rotation -= 1
+			else:
+				spritebody.rotation += 1
+		else:
+			spritebody.rotation = 0
 	if state == STATES.GROUNDED:
 		if Input.is_action_just_pressed(interact):
 			if clapcooldown == 0 && cangrab == false && !isgrabbing:
@@ -335,7 +342,10 @@ func mount():
 	
 func play_if_valid(sprite: AnimatedSprite2D, animation: String, animspeed):
 	if sprite.sprite_frames.has_animation(animation):
+		sprite.visible = true
 		sprite.play(animation, animspeed)
+	else:
+		sprite.visible = false
 
 func dismount():
 	active = true
