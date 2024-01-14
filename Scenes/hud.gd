@@ -7,13 +7,14 @@ var radius: float = 0.0
 
 func _ready():
 	GlobalSignalBus.PLAYERDIED.connect(_on_player_playerdied)
+	wakeup()
 
 func _process(delta):
 	gameoverscreen.material.set_shader_parameter("radius", radius)
 
 func _on_player_playerdied():
 	gameoverscreen.visible = true
-	wakeup()
+	
 
 func wakeup():
 	var tween = get_tree().create_tween()

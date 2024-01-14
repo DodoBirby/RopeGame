@@ -12,7 +12,6 @@ shader_parameter/radius = 0.0
 script = ExtResource("1_tgjss")
 
 [node name="GameOver" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_3hlcv")
 anchors_preset = 15
 anchor_right = 1.0

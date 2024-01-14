@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyqsbnqwonhrr"]
+
+[ext_resource type="AudioStream" uid="uid://vblpmic32f1l" path="res://Assets/Flaming Soul Part 2 v1.0.mp3" id="1_6esic"]
+[ext_resource type="Script" path="res://Objects/music_controller.gd" id="1_ctj3f"]
+
+[node name="MusicController" type="Node"]
+script = ExtResource("1_ctj3f")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_6esic")
+autoplay = true
+bus = &"Music"
