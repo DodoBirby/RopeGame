@@ -1865,7 +1865,7 @@ size = Vector2(6.99996, 3.41993)
 [node name="Player" type="CharacterBody2D"]
 z_index = 2
 texture_filter = 2
-collision_mask = 62
+collision_mask = 126
 floor_max_angle = 0.872665
 floor_snap_length = 5.0
 script = ExtResource("1_5qksl")
