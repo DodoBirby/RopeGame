@@ -75,6 +75,12 @@ func state_tick(delta) -> void:
 		STATES.DORMANT:
 			dormant_tick(delta)
 	animator(delta)
+	if throwtimer > 0:
+		throwtimer -= 1
+	if awaketimer > 0:
+		awaketimer -= 1
+	if sleeptimer > 0:
+		sleeptimer -= 1
 
 func dormant_tick(delta):
 	for body in NoMountBox.get_overlapping_bodies():
@@ -133,6 +139,8 @@ func grounded_tick(delta):
 		change_state(STATES.DORMANT)
 		sleeptimer = 40
 	if Input.is_action_just_pressed("Throw"):
+		throwtimer = 12
+	if throwtimer == 1:
 		player.throw(prevdir * PI / 4)
 		awake = false
 		change_state(STATES.DORMANT)
@@ -218,25 +226,23 @@ func _on_pickup_box_body_exited(body):
 		colliding = false
 
 func animator(delta):
+	mounted.z_index = 0
 	if state == STATES.DORMANT:
 		mounted.visible = false
 		running = false
 		if awake:
 			animationgroup = "Idle"
 			if awaketimer > 0:
-				awaketimer -= 1
 				animationgroup = "Awaken"
+		elif throwtimer == 1:
+			animationgroup = "Sleep"
+			body.frame = 3
+			sleeptimer = 24
+			print("Hello")
 		else:
-			if throwtimer > 0:
-				throwtimer -= 1
-				animationgroup = "Throw"
-			if throwtimer <= 0:
-				if sleeptimer > 0:
-					sleeptimer -= 1
-					animationgroup = "Sleep"
-				else:
-					animationgroup = "Dormant"
-			
+			animationgroup = "Dormant"
+		if sleeptimer > 0:
+			animationgroup = "Sleep"
 	elif state == STATES.AIRBORNE:
 			animationgroup = "Jump"
 			if body.frame == 3:
@@ -246,8 +252,11 @@ func animator(delta):
 	elif state == STATES.GROUNDED:
 		if running:
 			animationgroup = "Run"
-		else: animationgroup = "Idle"
-	
+		else: 
+			animationgroup = "Idle"
+		if throwtimer > 0:
+			animationgroup = "Throw"
+			mounted.z_index = 3
 	if animationgroup == "Idle":
 		animspeed = 1
 	else:
@@ -255,7 +264,6 @@ func animator(delta):
 	if state != STATES.DORMANT:
 		mounted.visible = true
 		play_if_valid(mounted, animationgroup, animspeed)
-	
 	play_if_valid(pack, animationgroup, animspeed)
 	play_if_valid(body, animationgroup, animspeed)
 	play_if_valid(leg, animationgroup, animspeed)

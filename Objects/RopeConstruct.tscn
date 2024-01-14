@@ -613,7 +613,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_isxm0")
 }],
-"loop": true,
+"loop": false,
 "name": &"Aim",
 "speed": 5.0
 }, {
@@ -645,7 +645,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8e0sx")
 }],
-"loop": true,
+"loop": false,
 "name": &"Awaken",
 "speed": 5.0
 }, {
@@ -653,7 +653,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oh6un")
 }],
-"loop": true,
+"loop": false,
 "name": &"Dormant",
 "speed": 5.0
 }, {
@@ -699,7 +699,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dgpwd")
 }],
-"loop": true,
+"loop": false,
 "name": &"Jump",
 "speed": 5.0
 }, {
@@ -757,7 +757,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tia0n")
 }],
-"loop": true,
+"loop": false,
 "name": &"Sleep",
 "speed": 5.0
 }, {
@@ -774,7 +774,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vngsn")
 }],
-"loop": true,
+"loop": false,
 "name": &"Throw",
 "speed": 5.0
 }]
@@ -873,13 +873,11 @@ animation = &"Idle"
 
 [node name="ConsMounted" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_qgmiy")
-animation = &"Idle"
+animation = &"Jump"
 
 [node name="ConsBody" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_xr7v5")
-animation = &"Sleep"
-frame = 7
-frame_progress = 0.0283936
+animation = &"Dormant"
 
 [node name="ConsLeg" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_smx7o")
