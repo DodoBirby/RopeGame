@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cp0bxfxyjdsvc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eoull"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wwbw8"]
+
+[node name="Spikes" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_eoull")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_wwbw8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
