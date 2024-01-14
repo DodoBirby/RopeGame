@@ -1,23 +1,29 @@
-[gd_scene load_steps=120 format=3 uid="uid://c2am0ffc371cy"]
+[gd_scene load_steps=115 format=3 uid="uid://c2am0ffc371cy"]
 
 [ext_resource type="Script" path="res://Objects/RopeConstruct.gd" id="1_5enb5"]
-[ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="2_fixk6"]
 [ext_resource type="Texture2D" uid="uid://37xfqwjc2eaf" path="res://Assets/Construct/GrandpaBackpack.png" id="3_t86un"]
 [ext_resource type="Texture2D" uid="uid://c6hv64shhu5ft" path="res://Assets/Construct/GrandpaMounteed.png" id="4_7iros"]
 [ext_resource type="Texture2D" uid="uid://4pn1ikdglqgx" path="res://Assets/Construct/GrandpaBody.png" id="5_61g0l"]
 [ext_resource type="Texture2D" uid="uid://deytxc8kg00m8" path="res://Assets/Construct/GrandpaLeg.png" id="6_x0ry7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gm5gu"]
-size = Vector2(87, 129)
+size = Vector2(87, 132)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pf7tw"]
 size = Vector2(141, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqg2r"]
+<<<<<<< Updated upstream
 size = Vector2(83, 121)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e4djp"]
 size = Vector2(83, 125)
+=======
+size = Vector2(86, 129)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4djp"]
+size = Vector2(87, 131)
+>>>>>>> Stashed changes
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hewve"]
 atlas = ExtResource("3_t86un")
@@ -516,17 +522,9 @@ region = Rect2(301, 0, 43, 38)
 atlas = ExtResource("5_61g0l")
 region = Rect2(0, 76, 43, 38)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lri81"]
-atlas = ExtResource("5_61g0l")
-region = Rect2(43, 76, 43, 38)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jly4u"]
 atlas = ExtResource("5_61g0l")
 region = Rect2(86, 76, 43, 38)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qmirw"]
-atlas = ExtResource("5_61g0l")
-region = Rect2(129, 76, 43, 38)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dat7j"]
 atlas = ExtResource("5_61g0l")
@@ -535,14 +533,6 @@ region = Rect2(172, 76, 43, 38)
 [sub_resource type="AtlasTexture" id="AtlasTexture_dgpwd"]
 atlas = ExtResource("5_61g0l")
 region = Rect2(215, 76, 43, 38)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3nx58"]
-atlas = ExtResource("5_61g0l")
-region = Rect2(258, 76, 43, 38)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jqn7q"]
-atlas = ExtResource("5_61g0l")
-region = Rect2(301, 76, 43, 38)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_do3sl"]
 atlas = ExtResource("5_61g0l")
@@ -708,25 +698,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_1xj68")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lri81")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_jly4u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qmirw")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dat7j")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dgpwd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3nx58")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jqn7q")
 }],
 "loop": true,
 "name": &"Jump",
@@ -862,11 +840,8 @@ collision_mask = 60
 script = ExtResource("1_5enb5")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_fixk6")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-9.5, -3.5)
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(-9, -3)
 shape = SubResource("RectangleShape2D_gm5gu")
 
 [node name="PickupBox" type="Area2D" parent="."]
@@ -881,7 +856,11 @@ collision_layer = 0
 collision_mask = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoClapBox"]
+<<<<<<< Updated upstream
 position = Vector2(-10.5, -3.5)
+=======
+position = Vector2(-9, -2.5)
+>>>>>>> Stashed changes
 shape = SubResource("RectangleShape2D_sqg2r")
 
 [node name="NoMountBox" type="Area2D" parent="."]
@@ -889,27 +868,32 @@ collision_layer = 0
 collision_mask = 44
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoMountBox"]
+<<<<<<< Updated upstream
 position = Vector2(-9.5, -3.5)
+=======
+position = Vector2(-9.5, -2.5)
+>>>>>>> Stashed changes
 shape = SubResource("RectangleShape2D_e4djp")
 
 [node name="CompositeSprite" type="Node2D" parent="."]
+z_index = 2
 texture_filter = 1
-position = Vector2(0, -8)
+position = Vector2(0, -9)
 scale = Vector2(4, 4)
 
-[node name="Backpack" type="AnimatedSprite2D" parent="CompositeSprite"]
+[node name="ConsBackpack" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_gj80a")
 animation = &"Idle"
 
-[node name="Player" type="AnimatedSprite2D" parent="CompositeSprite"]
+[node name="ConsMounted" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_qgmiy")
 animation = &"Idle"
 
-[node name="Body" type="AnimatedSprite2D" parent="CompositeSprite"]
+[node name="ConsBody" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_xr7v5")
-animation = &"Idle"
+animation = &"Sleep"
 
-[node name="Leg" type="AnimatedSprite2D" parent="CompositeSprite"]
+[node name="ConsLeg" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_smx7o")
 animation = &"Throw"
 

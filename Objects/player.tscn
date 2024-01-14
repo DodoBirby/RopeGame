@@ -1,10 +1,11 @@
-[gd_scene load_steps=247 format=3 uid="uid://vnywocngypip"]
+[gd_scene load_steps=249 format=3 uid="uid://vnywocngypip"]
 
 [ext_resource type="Script" path="res://Objects/Player.gd" id="1_5qksl"]
 [ext_resource type="Texture2D" uid="uid://bwmvsvbbvuy8s" path="res://Assets/Character/PlayerHeadSheet.png" id="2_2xq00"]
 [ext_resource type="Texture2D" uid="uid://c013d5exah3om" path="res://Assets/Character/PlayerLegsSheet.png" id="3_4mccu"]
 [ext_resource type="Texture2D" uid="uid://bc07qyja1vkfc" path="res://Assets/Character/PlayerTorsoSheet.png" id="4_v24xw"]
 [ext_resource type="Texture2D" uid="uid://bo0foddgp5c1u" path="res://Assets/Character/PlayerUnderArmSheet.png" id="5_osvwk"]
+[ext_resource type="Texture2D" uid="uid://b17ip12hvygan" path="res://Assets/Character/PlayerSpecialSheet.png" id="6_a8g4d"]
 [ext_resource type="Texture2D" uid="uid://khkpfwqtsp2q" path="res://Assets/Character/PlayerForeArmSheet.png" id="6_ykfoh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_unef4"]
@@ -1108,6 +1109,10 @@ region = Rect2(22, 95, 22, 19)
 atlas = ExtResource("4_v24xw")
 region = Rect2(0, 95, 22, 19)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mraht"]
+atlas = ExtResource("6_a8g4d")
+region = Rect2(0, 19, 22, 19)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_xrssi"]
 animations = [{
 "frames": [{
@@ -1318,6 +1323,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"Swinging",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mraht")
+}],
+"loop": true,
+"name": &"Thrown",
 "speed": 5.0
 }]
 
@@ -1875,13 +1888,14 @@ centered = false
 
 [node name="Legs" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_3aomn")
-animation = &"Jump"
+animation = &"Hurt"
 centered = false
 
 [node name="Torso" type="AnimatedSprite2D" parent="SpriteController"]
+position = Vector2(11, 12.5)
 sprite_frames = SubResource("SpriteFrames_xrssi")
-animation = &"Jump"
-centered = false
+animation = &"Thrown"
+offset = Vector2(0, -3)
 
 [node name="BodyArm" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_y0bty")
