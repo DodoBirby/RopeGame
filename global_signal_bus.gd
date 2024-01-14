@@ -12,3 +12,6 @@ func player_damaged():
 
 func cameralimitset(rect: Rect2):
 	emit_signal("cameralimits", rect)
+
+func player_died():
+	emit_signal("PLAYERDIED")

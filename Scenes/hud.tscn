@@ -1,12 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctgcni7frbq24"]
+[gd_scene load_steps=4 format=3 uid="uid://ctgcni7frbq24"]
 
 [ext_resource type="Script" path="res://Scenes/hud.gd" id="1_tgjss"]
+[ext_resource type="Shader" path="res://Scenes/Circle.gdshader" id="2_i3efe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hlcv"]
+shader = ExtResource("2_i3efe")
+shader_parameter/radius = 0.0
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_tgjss")
 
 [node name="GameOver" type="ColorRect" parent="."]
 visible = false
+material = SubResource("ShaderMaterial_3hlcv")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

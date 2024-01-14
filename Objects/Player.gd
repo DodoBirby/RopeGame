@@ -8,7 +8,7 @@ var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 90
 var tetherlength = 500.0
-var health = 99
+var health = 1
 var maxhealth = 2
 var invincibility = 0
 var clapcooldown = 60
@@ -54,6 +54,7 @@ var JUMPFORCE = 2.0 * JUMP_HEIGHT / TIME_TO_PEAK
 
 var construct_scene: PackedScene = preload("res://Objects/RopeConstruct.tscn")
 var camera_scene: PackedScene = preload("res://Objects/player_camera.tscn")
+var hud_scene: PackedScene = preload("res://Scenes/hud.tscn")
 var state = STATES.GROUNDED
 var active = true
 
@@ -65,6 +66,7 @@ signal PLAYERDAMAGED
 
 var tetherpoint: RopeConstruct
 var camera: PlayerCam
+var hud: HUD
 
 func _process(delta):
 	queue_redraw()
@@ -79,6 +81,9 @@ func _ready():
 	camera.player = self
 	camera.position = position
 	camera.construct = tetherpoint
+	hud = hud_scene.instantiate()
+	get_parent().add_child.call_deferred(hud)
+	
 '''
 Runs once every frame (60fps)
 '''
@@ -243,7 +248,7 @@ func throw(angle):
 
 func die():
 	
-	emit_signal("PLAYERDIED")
+	GlobalSignalBus.player_died()
 	#TODO Respawn
 
 func take_damage():
