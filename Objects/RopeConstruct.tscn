@@ -13,17 +13,10 @@ size = Vector2(87, 132)
 size = Vector2(141, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqg2r"]
-<<<<<<< Updated upstream
 size = Vector2(83, 121)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e4djp"]
 size = Vector2(83, 125)
-=======
-size = Vector2(86, 129)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4djp"]
-size = Vector2(87, 131)
->>>>>>> Stashed changes
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hewve"]
 atlas = ExtResource("3_t86un")
@@ -856,11 +849,7 @@ collision_layer = 0
 collision_mask = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoClapBox"]
-<<<<<<< Updated upstream
 position = Vector2(-10.5, -3.5)
-=======
-position = Vector2(-9, -2.5)
->>>>>>> Stashed changes
 shape = SubResource("RectangleShape2D_sqg2r")
 
 [node name="NoMountBox" type="Area2D" parent="."]
@@ -868,11 +857,7 @@ collision_layer = 0
 collision_mask = 44
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoMountBox"]
-<<<<<<< Updated upstream
 position = Vector2(-9.5, -3.5)
-=======
-position = Vector2(-9.5, -2.5)
->>>>>>> Stashed changes
 shape = SubResource("RectangleShape2D_e4djp")
 
 [node name="CompositeSprite" type="Node2D" parent="."]
