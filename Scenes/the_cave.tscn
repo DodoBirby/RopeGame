@@ -1707,4 +1707,4 @@ layer_to_switch = 3
 
 [node name="LevelClear" parent="." instance=ExtResource("11_2ajph")]
 position = Vector2(3232, 2768)
-next_level = "res://Scenes/the_cave.tscn"
+next_level = "res://Scenes/Level2.tscn"
