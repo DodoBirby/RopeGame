@@ -8,6 +8,10 @@ var player: Player
 var awake = false
 var prevdir = -1
 var colliding = false
+var coyotetime = 0
+var jumpbuffer = 0
+
+@onready var collider = $StandingCollider
 
 #Animator
 @onready var pack = $CompositeSprite/ConsBackpack
@@ -49,6 +53,8 @@ func exit_state(oldstate) -> void:
 			set_collision_layer_value(2, true)
 			set_collision_mask_value(6, true)
 			modulate = Color(1, 1, 1)
+			collider.shape.size.y = 132
+			collider.position.y = -3
 		STATES.AIRBORNE:
 			GlobalSignalBus.shake_camera(10)
 '''
@@ -73,7 +79,7 @@ func state_tick(delta) -> void:
 func dormant_tick(delta):
 	for body in NoMountBox.get_overlapping_bodies():
 		if body is TileMap:
-			position.y -= 5
+			position.y -= 64
 	if awaketimer <= 0:
 		velocity.x = 0
 		velocity.y += GRAVITY * delta
@@ -81,6 +87,8 @@ func dormant_tick(delta):
 			set_collision_layer_value(2, false)
 			set_collision_mask_value(6, false)
 			modulate = Color(1, 1, 1)
+			collider.shape.size.y = 132
+			collider.position.y = -3
 			if colliding and Input.is_action_just_pressed("Up") and not NoMountBox.has_overlapping_bodies():
 				player.active = false
 				player.visible = false
@@ -88,6 +96,8 @@ func dormant_tick(delta):
 		else:
 			set_collision_layer_value(2, true)
 			set_collision_mask_value(6, true)
+			collider.shape.size.y = 108
+			collider.position.y = 9
 		move_and_slide()
 		for i in get_slide_collision_count():
 			var c = get_slide_collision(i)
@@ -100,6 +110,7 @@ func dormant_tick(delta):
 
 func grounded_tick(delta):
 	var dir = 0
+	coyotetime = 8
 	if Input.is_action_pressed("Left"):
 		dir = -1
 		prevdir = -1
@@ -112,8 +123,10 @@ func grounded_tick(delta):
 		facing = false
 	else:
 		running = false
-	if Input.is_action_just_pressed("Up"):
+	if Input.is_action_just_pressed("Up") or jumpbuffer > 0:
 		velocity.y = -JUMPFORCE
+		coyotetime = 0
+		jumpbuffer = 0
 	if Input.is_action_just_pressed("Down"):
 		player.dismount()
 		awake = false
@@ -144,6 +157,12 @@ func airborne_tick(delta):
 		dir = 1
 		prevdir = 1
 		facing = false
+	if Input.is_action_just_pressed("Up"):
+		if coyotetime > 0:
+			velocity.y = -JUMPFORCE
+			coyotetime = 0
+		else:
+			jumpbuffer = 10
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
 	velocity.y += GRAVITY * delta
 	move_and_slide()
@@ -154,6 +173,10 @@ func airborne_tick(delta):
 			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
 		if collider is Enemy and c.get_normal() == Vector2.UP:
 			collider.take_damage()
+	if coyotetime > 0:
+		coyotetime -= 1
+	if jumpbuffer > 0:
+		jumpbuffer -= 1
 '''
 Returns a state to transition to on this frame
 '''
