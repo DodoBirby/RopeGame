@@ -4,16 +4,17 @@
 [ext_resource type="PackedScene" uid="uid://diw1h5do24n2v" path="res://Objects/rope_pickup.tscn" id="2_h83bt"]
 [ext_resource type="PackedScene" uid="uid://vnywocngypip" path="res://Objects/player.tscn" id="2_xylt5"]
 [ext_resource type="PackedScene" uid="uid://xhaluvvkracu" path="res://Objects/switch.tscn" id="3_3tu3l"]
-[ext_resource type="PackedScene" uid="uid://cp0bxfxyjdsvc" path="res://Objects/spikes.tscn" id="3_hcw73"]
+[ext_resource type="PackedScene" path="res://Objects/spikes.tscn" id="3_hcw73"]
 [ext_resource type="PackedScene" uid="uid://mxlq4te2qwgu" path="res://Objects/box.tscn" id="3_o6wt5"]
-[ext_resource type="PackedScene" uid="uid://81dudjpbjqwj" path="res://Objects/spikesCeiling.tscn" id="4_7lcb8"]
+[ext_resource type="PackedScene" path="res://Objects/spikesCeiling.tscn" id="4_7lcb8"]
 [ext_resource type="Script" path="res://Scenes/the_cave.gd" id="4_aexvn"]
-[ext_resource type="PackedScene" uid="uid://b78ahhk7pnsf3" path="res://Objects/spikesWallLeft.tscn" id="5_x8ybr"]
-[ext_resource type="PackedScene" uid="uid://bnrkqfchst7yk" path="res://Objects/spikesWallRight.tscn" id="6_7ck5w"]
+[ext_resource type="PackedScene" path="res://Objects/spikesWallLeft.tscn" id="5_x8ybr"]
+[ext_resource type="PackedScene" path="res://Objects/spikesWallRight.tscn" id="6_7ck5w"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pmwbv"]
 scenes/1/scene = ExtResource("3_o6wt5")
 scenes/2/scene = ExtResource("2_h83bt")
+scenes/3/scene = ExtResource("3_3tu3l")
 scenes/4/scene = ExtResource("3_hcw73")
 scenes/5/scene = ExtResource("4_7lcb8")
 scenes/6/scene = ExtResource("5_x8ybr")
