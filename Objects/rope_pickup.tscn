@@ -58,7 +58,7 @@ size = Vector2(132, 131.459)
 
 [node name="RopePickup" type="AnimatedSprite2D"]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_1rtsx")
 frame_progress = 0.842896
 script = ExtResource("2_3ffrt")
