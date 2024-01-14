@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvqeaa5015v5c"]
+[gd_scene load_steps=3 format=3 uid="uid://dwcxickapbb23"]
 
 [ext_resource type="Script" path="res://Scenes/main_menu.gd" id="1_1yghv"]
 [ext_resource type="TileSet" uid="uid://1aih4oa3ug05" path="res://Scenes/the_cave.tres" id="1_57v3r"]
