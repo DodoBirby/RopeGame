@@ -236,7 +236,7 @@ func throw(angle):
 	active = true
 	print(thrown)
 	change_state(STATES.AIRBORNE)
-	position = tetherpoint.position + Vector2.UP * 120
+	position = tetherpoint.position + Vector2.UP * 140
 	var throwvector = Vector2.UP.rotated(angle)
 	velocity = throwvector * THROWFORCE * (tetherlength / 500.0)
 
