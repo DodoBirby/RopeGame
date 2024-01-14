@@ -27,7 +27,11 @@ var interact = "Down"
 
 @onready var collision= $BodyCollider
 @onready var ropeattach = $RopeAttachPoint
-
+@onready var footsteps = $Footstepper
+@onready var clapsound = $Clapper
+@onready var jumpsound = $Jump
+@onready var switchsound = $Switch
+@onready var somersaultsound = $Somersault
 
 # Animator vars
 @onready var spritecontroller = $SpriteController
@@ -113,8 +117,11 @@ func grounded_tick(delta):
 		idle = true
 	if Input.is_action_just_pressed("Down") and switchnearby:
 		switchnearby.switch()
+		switchsound.play()
+		
 	if Input.is_action_just_pressed("Up") or jumpbuffer > 0:
 		velocity.y = -JUMPFORCE
+		jumpsound.play()
 		jumpbuffer = 0
 		coyotetime = 0
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
@@ -146,6 +153,7 @@ func airborne_tick(delta):
 		if coyotetime > 0:
 			coyotetime = 0
 			velocity.y = -JUMPFORCE
+			jumpsound.play()
 		else:
 			jumpbuffer = JUMP_BUFFER_FRAMES
 		
@@ -285,6 +293,8 @@ func animator(delta):
 			spritearms.frame = 4
 		if thrown > 0:
 			groupbody = "Thrown"
+			if not somersaultsound.playing:
+				somersaultsound.play()
 			if facing == true:
 				spritebody.rotation -= 1
 			else:
@@ -302,11 +312,13 @@ func animator(delta):
 			if Input.is_action_pressed("Left") || Input.is_action_pressed("Right"):
 				groupbody = "Run"
 				grouparms = "Run"
+				
 			
 		if isclapping:
 			grouparms = "Clap"
 			if clapcooldown == 8 * animspeed:
 				tetherpoint.clap()
+				clapsound.play()
 				
 			if spritearms.animation == "Clap" && spritearms.frame == 8:
 				isclapping = false
@@ -328,6 +340,8 @@ func animator(delta):
 		spritelegs.frame = hurtdir
 	if thrown == 0:
 		spritebody.rotation = 0
+		somersaultsound.stop()
+	
 	play_if_valid(spritehead, groupbody, animspeed)
 	play_if_valid(spritebody, groupbody, animspeed)
 	play_if_valid(spritelegs, groupbody, animspeed)
@@ -366,3 +380,9 @@ func dismount():
 func _draw():
 	if active:
 		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.64), 5)
+
+
+func _on_legs_frame_changed():
+	if spritelegs.frame == 0 or spritelegs.frame == 6:
+		if groupbody == "Run":
+			footsteps.play()

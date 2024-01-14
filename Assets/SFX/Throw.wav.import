@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://1q8pec71x580"
-path="res://.godot/imported/Clap.wav-3c3e9a02d932d4b0d510d11132c044d7.sample"
+uid="uid://d0hq80ly2p11a"
+path="res://.godot/imported/Throw.wav-c1b90bb69b179ef73f837c58b9759f98.sample"
 
 [deps]
 
-source_file="res://Assets/SFX/Clap.wav"
-dest_files=["res://.godot/imported/Clap.wav-3c3e9a02d932d4b0d510d11132c044d7.sample"]
+source_file="res://Assets/SFX/Throw.wav"
+dest_files=["res://.godot/imported/Throw.wav-c1b90bb69b179ef73f837c58b9759f98.sample"]
 
 [params]
 

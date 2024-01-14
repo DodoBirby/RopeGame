@@ -1,4 +1,4 @@
-[gd_scene load_steps=249 format=3 uid="uid://vnywocngypip"]
+[gd_scene load_steps=254 format=3 uid="uid://vnywocngypip"]
 
 [ext_resource type="Script" path="res://Objects/Player.gd" id="1_5qksl"]
 [ext_resource type="Texture2D" uid="uid://bwmvsvbbvuy8s" path="res://Assets/Character/PlayerHeadSheet.png" id="2_2xq00"]
@@ -7,6 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://bo0foddgp5c1u" path="res://Assets/Character/PlayerUnderArmSheet.png" id="5_osvwk"]
 [ext_resource type="Texture2D" uid="uid://b17ip12hvygan" path="res://Assets/Character/PlayerSpecialSheet.png" id="6_a8g4d"]
 [ext_resource type="Texture2D" uid="uid://khkpfwqtsp2q" path="res://Assets/Character/PlayerForeArmSheet.png" id="6_ykfoh"]
+[ext_resource type="AudioStream" uid="uid://ctlj4foealb54" path="res://Assets/SFX/ChildFootstep.wav" id="8_2oy45"]
+[ext_resource type="AudioStream" uid="uid://1q8pec71x580" path="res://Assets/SFX/Clap.wav" id="9_plxyx"]
+[ext_resource type="AudioStream" uid="uid://cq10idj3wak1s" path="res://Assets/SFX/GirlJump.wav" id="10_t4oyp"]
+[ext_resource type="AudioStream" uid="uid://ca8nua0co6fwf" path="res://Assets/SFX/Switch.wav" id="11_kp2qu"]
+[ext_resource type="AudioStream" uid="uid://b0yfs3t2komcb" path="res://Assets/SFX/Somersault2.wav" id="12_6myel"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_unef4"]
 atlas = ExtResource("5_osvwk")
@@ -1888,7 +1893,8 @@ centered = false
 
 [node name="Legs" type="AnimatedSprite2D" parent="SpriteController"]
 sprite_frames = SubResource("SpriteFrames_3aomn")
-animation = &"Hurt"
+animation = &"Run"
+frame_progress = 0.0688304
 centered = false
 
 [node name="Torso" type="AnimatedSprite2D" parent="SpriteController"]
@@ -1921,3 +1927,30 @@ shape = SubResource("RectangleShape2D_ucwv2")
 
 [node name="RopeAttachPoint" type="Node2D" parent="."]
 position = Vector2(35, 38)
+
+[node name="Footstepper" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_2oy45")
+volume_db = -6.0
+bus = &"SFX"
+
+[node name="Clapper" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_plxyx")
+volume_db = -6.0
+bus = &"SFX"
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_t4oyp")
+volume_db = -6.0
+bus = &"SFX"
+
+[node name="Switch" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_kp2qu")
+volume_db = -6.0
+bus = &"SFX"
+
+[node name="Somersault" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_6myel")
+volume_db = -12.0
+bus = &"SFX"
+
+[connection signal="frame_changed" from="SpriteController/Legs" to="." method="_on_legs_frame_changed"]

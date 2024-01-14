@@ -12,6 +12,8 @@ var coyotetime = 0
 var jumpbuffer = 0
 
 @onready var collider = $StandingCollider
+@onready var throwsound = $Throw
+@onready var footstepsound = $Footstep
 
 #Animator
 @onready var pack = $CompositeSprite/ConsBackpack
@@ -141,6 +143,7 @@ func grounded_tick(delta):
 	if Input.is_action_just_pressed("Throw"):
 		throwtimer = 12
 	if throwtimer == 1:
+		throwsound.play()
 		player.throw(prevdir * PI / 4)
 		awake = false
 		change_state(STATES.DORMANT)
@@ -279,3 +282,9 @@ func play_if_valid(sprite: AnimatedSprite2D, animation: String, animspeed):
 		sprite.play(animation, animspeed)
 	else: 
 		sprite.visible = false
+
+
+func _on_cons_body_frame_changed():
+	if body.frame == 0 or body.frame == 4:
+		if animationgroup == "Run":
+			footstepsound.play()

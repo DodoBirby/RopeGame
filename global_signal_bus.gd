@@ -4,7 +4,6 @@ signal PLAYERDAMAGED
 signal PLAYERDIED
 signal cameralimits(rect)
 
-var upgrades_gathered: int = 0
 
 func shake_camera(strength):
 	emit_signal("camerashake", strength)

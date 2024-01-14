@@ -7,6 +7,7 @@ extends Area2D
 @onready var sprite = $Sprite2D
 
 func _ready():
+	tilemap = get_parent()
 	tilemap.set_layer_enabled(layer_to_switch, enabled)
 
 func _on_body_entered(body):

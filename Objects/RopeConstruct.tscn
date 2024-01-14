@@ -1,9 +1,10 @@
-[gd_scene load_steps=115 format=3 uid="uid://c2am0ffc371cy"]
+[gd_scene load_steps=116 format=3 uid="uid://c2am0ffc371cy"]
 
 [ext_resource type="Script" path="res://Objects/RopeConstruct.gd" id="1_5enb5"]
 [ext_resource type="Texture2D" uid="uid://37xfqwjc2eaf" path="res://Assets/Construct/GrandpaBackpack.png" id="3_t86un"]
 [ext_resource type="Texture2D" uid="uid://c6hv64shhu5ft" path="res://Assets/Construct/GrandpaMounteed.png" id="4_7iros"]
 [ext_resource type="Texture2D" uid="uid://4pn1ikdglqgx" path="res://Assets/Construct/GrandpaBody.png" id="5_61g0l"]
+[ext_resource type="AudioStream" uid="uid://d0hq80ly2p11a" path="res://Assets/SFX/Throw.wav" id="6_dnab4"]
 [ext_resource type="Texture2D" uid="uid://deytxc8kg00m8" path="res://Assets/Construct/GrandpaLeg.png" id="6_x0ry7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gm5gu"]
@@ -877,13 +878,20 @@ animation = &"Idle"
 
 [node name="ConsBody" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_xr7v5")
-animation = &"Sleep"
-frame = 7
-frame_progress = 0.0283936
+animation = &"Run"
 
 [node name="ConsLeg" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_smx7o")
-animation = &"Throw"
+animation = &"Aim"
+
+[node name="Throw" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_dnab4")
+volume_db = -6.0
+bus = &"SFX"
+
+[node name="Footstep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_dnab4")
 
 [connection signal="body_entered" from="PickupBox" to="." method="_on_pickup_box_body_entered"]
 [connection signal="body_exited" from="PickupBox" to="." method="_on_pickup_box_body_exited"]
+[connection signal="frame_changed" from="CompositeSprite/ConsBody" to="." method="_on_cons_body_frame_changed"]
