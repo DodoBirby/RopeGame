@@ -19,6 +19,8 @@ var PUSH_FORCE = 100.0
 var jumpbuffer = 0
 var JUMP_BUFFER_FRAMES = 10
 var respawnpos: Vector2
+var switchnearby: Switch = null
+
 
 # Control Vars
 var interact = "Down"
@@ -102,6 +104,8 @@ func grounded_tick(delta):
 		idle = false
 	else:
 		idle = true
+	if Input.is_action_just_pressed("Down") and switchnearby:
+		switchnearby.switch()
 	if Input.is_action_just_pressed("Up") or jumpbuffer > 0:
 		velocity.y = -JUMPFORCE
 		jumpbuffer = 0
@@ -281,7 +285,7 @@ func animator(delta):
 		else:
 			spritebody.rotation = 0
 	if state == STATES.GROUNDED:
-		if Input.is_action_just_pressed(interact):
+		if Input.is_action_just_pressed(interact) and not switchnearby:
 			if clapcooldown == 0 && cangrab == false && !isgrabbing:
 				clapcooldown = 15 * animspeed
 				isclapping = true
