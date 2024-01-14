@@ -91,6 +91,7 @@ Grounded state tick function
 '''
 func grounded_tick(delta):
 	var dir = 0
+	thrown = 0
 	coyotetime = 8
 	if Input.is_action_pressed("Left"):
 		dir = -1
@@ -278,8 +279,6 @@ func animator(delta):
 				spritebody.rotation -= 1
 			else:
 				spritebody.rotation += 1
-		else:
-			spritebody.rotation = 0
 	if state == STATES.GROUNDED:
 		if Input.is_action_just_pressed(interact):
 			if clapcooldown == 0 && cangrab == false && !isgrabbing:
@@ -318,7 +317,8 @@ func animator(delta):
 		spritehead.frame = hurtdir
 		spritebody.frame = hurtdir
 		spritelegs.frame = hurtdir
-	
+	if thrown == 0:
+		spritebody.rotation = 0
 	play_if_valid(spritehead, groupbody, animspeed)
 	play_if_valid(spritebody, groupbody, animspeed)
 	play_if_valid(spritelegs, groupbody, animspeed)
