@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var sound = $Sound
 
 func save_options():
 	var options_file = FileAccess.open("user://config.cfg", FileAccess.WRITE)
@@ -22,3 +23,7 @@ func _on_fullscreen_pressed():
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
+
+
+func _on_play_sound_pressed():
+	sound.play()

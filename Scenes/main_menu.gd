@@ -1,7 +1,8 @@
 extends Node2D
 
 func _ready():
-	MusicController.start_menu_music()
+	if not MusicController.musicplayer.playing:
+		MusicController.start_menu_music()
 
 func _on_quit_pressed():
 	get_tree().quit()
@@ -14,3 +15,7 @@ func _on_play_pressed():
 
 func _on_options_pressed():
 	get_tree().change_scene_to_file("res://Scenes/options.tscn")
+
+
+func _on_credits_pressed():
+	get_tree().change_scene_to_file("res://Scenes/credits.tscn")

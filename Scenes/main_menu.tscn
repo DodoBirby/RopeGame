@@ -50,6 +50,15 @@ offset_bottom = 1248.0
 theme_override_font_sizes/font_size = 60
 text = "Quit"
 
+[node name="Credits" type="Button" parent="."]
+offset_left = 1824.0
+offset_top = 1056.0
+offset_right = 2144.0
+offset_bottom = 1248.0
+theme_override_font_sizes/font_size = 60
+text = "Credits"
+
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Credits" to="." method="_on_credits_pressed"]

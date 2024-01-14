@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm4pifnii6u04"]
+
+[ext_resource type="Script" path="res://Scenes/credits.gd" id="1_0gkse"]
+
+[node name="Credits" type="Node2D"]
+script = ExtResource("1_0gkse")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(0.5, 0.5)
+
+[node name="Back Button" type="Button" parent="Camera2D"]
+offset_left = 160.0
+offset_top = 672.0
+offset_right = 545.0
+offset_bottom = 864.0
+theme_override_font_sizes/font_size = 60
+text = "Back to Main"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 96.0
+offset_right = 3773.0
+offset_bottom = 609.0
+theme_override_font_sizes/font_size = 60
+text = "Programming/Design/Levels - DodoBirb
+Art/Levels/Design - TheyCallMeXander
+
+Third Party Assets
+Cave tileset - Chipmunk, OpenGameArt: https://opengameart.org/content/cave-tiles-sprites
+Music - Penn-Pierson: https://www.youtube.com/watch?v=jhdT9nbYxaM&list=PLye9mcKwe2zy3KW8uK_3F7HVMjJjdqSqU&index=2"
+
+[connection signal="pressed" from="Camera2D/Back Button" to="." method="_on_back_button_pressed"]
