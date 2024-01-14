@@ -8,7 +8,7 @@ var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 90
 var tetherlength = 8
-var health = 99
+var health = 1
 var maxhealth = 2
 var invincibility = 0
 var clapcooldown = 60
@@ -92,6 +92,8 @@ func _ready():
 Runs once every frame (60fps)
 '''
 func _physics_process(delta):
+	if Input.is_action_just_pressed("Reset"):
+		die()
 	state_tick(delta)
 	var transition = state_transition()
 	if transition != null:
@@ -255,8 +257,7 @@ func throw(angle):
 	velocity = throwvector * THROWFORCE * (tetherlength * 64 / 500.0)
 
 func die():
-	
-	GlobalSignalBus.player_died()
+	get_tree().reload_current_scene.call_deferred()
 	#TODO Respawn
 
 func take_damage():
