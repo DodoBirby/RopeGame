@@ -212,6 +212,10 @@ func animator(delta):
 			
 	elif state == STATES.AIRBORNE:
 			animationgroup = "Jump"
+			if body.frame == 3:
+				body.frame = 3
+				mounted.frame = 3
+				pack.frame = 3
 	elif state == STATES.GROUNDED:
 		if running:
 			animationgroup = "Run"
