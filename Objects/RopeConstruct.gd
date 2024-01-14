@@ -117,12 +117,12 @@ func dormant_tick(delta):
 func grounded_tick(delta):
 	var dir = 0
 	coyotetime = 8
-	if Input.is_action_pressed("Left"):
+	if Input.is_action_pressed("Left") and not throwtimer > 0:
 		dir = -1
 		prevdir = -1
 		running = true
 		facing = true
-	elif Input.is_action_pressed("Right"):
+	elif Input.is_action_pressed("Right") and not throwtimer > 0:
 		dir = 1
 		prevdir = 1
 		running = true
