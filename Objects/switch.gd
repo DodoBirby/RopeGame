@@ -3,8 +3,11 @@ extends Area2D
 
 @export var tilemap: TileMap
 @export var layer_to_switch: int = 0
-var enabled: bool = false
+@export var enabled: bool = false
 
+
+func _ready():
+	tilemap.set_layer_enabled(layer_to_switch, enabled)
 
 func _on_body_entered(body):
 	if body is Player:

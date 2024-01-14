@@ -15,7 +15,7 @@ var SHAKE_FADE = 5.0
 
 var rng = RandomNumberGenerator.new()
 
-var shake_strength = 0.0
+var shake_strength: float = 0.0
 
 
 func _ready():
@@ -50,7 +50,7 @@ func _process(delta):
 func shake():
 	shake_strength = RANDOM_STRENGTH
 
-func shake_with_strength(strength):
+func shake_with_strength(strength: float):
 	shake_strength = strength
 
 func setcamlimits(rect: Rect2):

@@ -830,6 +830,7 @@ animations = [{
 [node name="RopeConstruct" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 60
+floor_snap_length = 20.0
 script = ExtResource("1_5enb5")
 metadata/_edit_group_ = true
 

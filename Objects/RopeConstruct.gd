@@ -49,7 +49,8 @@ func exit_state(oldstate) -> void:
 			set_collision_layer_value(2, true)
 			set_collision_mask_value(6, true)
 			modulate = Color(1, 1, 1)
-
+		STATES.AIRBORNE:
+			GlobalSignalBus.shake_camera(10)
 '''
 Runs when a new state is entered
 '''

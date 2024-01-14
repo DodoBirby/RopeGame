@@ -77,6 +77,7 @@ func _ready():
 	camera = camera_scene.instantiate()
 	get_parent().add_child.call_deferred(camera)
 	camera.player = self
+	camera.position = position
 	camera.construct = tetherpoint
 '''
 Runs once every frame (60fps)
