@@ -71,6 +71,9 @@ func state_tick(delta) -> void:
 	animator(delta)
 
 func dormant_tick(delta):
+	for body in NoMountBox.get_overlapping_bodies():
+		if body is TileMap:
+			position.y -= 5
 	if awaketimer <= 0:
 		velocity.x = 0
 		velocity.y += GRAVITY * delta

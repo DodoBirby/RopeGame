@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b78ahhk7pnsf3"]
+
+[ext_resource type="PackedScene" uid="uid://cp0bxfxyjdsvc" path="res://Objects/spikes.tscn" id="1_dufys"]
+
+[node name="Spikes" instance=ExtResource("1_dufys")]
+
+[node name="Sprite2D" parent="." index="0"]
+rotation = 1.5708
