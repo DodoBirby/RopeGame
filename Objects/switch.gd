@@ -4,7 +4,7 @@ extends Area2D
 @export var tilemap: TileMap
 @export var layer_to_switch: int = 0
 @export var enabled: bool = false
-
+@onready var sprite = $Sprite2D
 
 func _ready():
 	tilemap.set_layer_enabled(layer_to_switch, enabled)
@@ -15,9 +15,9 @@ func _on_body_entered(body):
 	
 func _physics_process(delta):
 	if enabled:
-		modulate = Color(1, 1, 1, 1)
+		sprite.region_rect.position = Vector2.ZERO
 	else:
-		modulate = Color(1, 1, 1, 0.5)
+		sprite.region_rect.position = Vector2(16, 0)
 
 
 func _on_body_exited(body):
