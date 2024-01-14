@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bgih4wbnl4iq6"
+path="res://.godot/imported/Pause Menu Track 1 v1.0.mp3-93c83563f03eeeb77071240f033a9949.mp3str"
+
+[deps]
+
+source_file="res://Assets/Pause Menu Track 1 v1.0.mp3"
+dest_files=["res://.godot/imported/Pause Menu Track 1 v1.0.mp3-93c83563f03eeeb77071240f033a9949.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

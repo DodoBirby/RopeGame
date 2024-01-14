@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=3 uid="uid://cscfnsx4vju2m"]
+
+[ext_resource type="Script" path="res://Scenes/options.gd" id="1_5lo71"]
+[ext_resource type="TileSet" uid="uid://1aih4oa3ug05" path="res://Scenes/the_cave.tres" id="1_ouplk"]
+[ext_resource type="Script" path="res://Scenes/Music.gd" id="2_xgpkl"]
+[ext_resource type="Script" path="res://Scenes/SFX.gd" id="3_nmnue"]
+
+[node name="Options" type="Node2D"]
+script = ExtResource("1_5lo71")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_ouplk")
+format = 2
+layer_0/tile_data = PackedInt32Array(65538, 589825, 0, 65539, 589825, 0, 65540, 589825, 0, 65541, 589825, 0, 131077, 589825, 0, 196613, 589825, 0, 262149, 589825, 0, 327685, 589825, 0, 327684, 589825, 0, 327683, 589825, 0, 327682, 589825, 0, 262146, 589825, 0, 196610, 589825, 0, 131074, 589825, 0, 65543, 589825, 0, 131079, 589825, 0, 196615, 589825, 0, 262151, 589825, 0, 327687, 589825, 0, 65544, 589825, 0, 65545, 589825, 0, 65546, 589825, 0, 131082, 589825, 0, 196618, 589825, 0, 196617, 589825, 0, 196616, 589825, 0, 65554, 589825, 0, 65555, 589825, 0, 65556, 589825, 0, 131091, 589825, 0, 196627, 589825, 0, 262163, 589825, 0, 327699, 589825, 0, 327698, 589825, 0, 327700, 589825, 0, 65548, 589825, 0, 65549, 589825, 0, 65550, 589825, 0, 65551, 589825, 0, 65552, 589825, 0, 131086, 589825, 0, 196622, 589825, 0, 262158, 589825, 0, 327694, 589825, 0, 65558, 589825, 0, 65559, 589825, 0, 65560, 589825, 0, 65561, 589825, 0, 131097, 589825, 0, 196633, 589825, 0, 262169, 589825, 0, 327705, 589825, 0, 327704, 589825, 0, 327703, 589825, 0, 327702, 589825, 0, 262166, 589825, 0, 196630, 589825, 0, 131094, 589825, 0, 327707, 589825, 0, 262171, 589825, 0, 196635, 589825, 0, 131099, 589825, 0, 65563, 589825, 0, 327711, 589825, 0, 262175, 589825, 0, 196639, 589825, 0, 131103, 589825, 0, 65567, 589825, 0, 65571, 589825, 0, 65570, 589825, 0, 65569, 589825, 0, 131105, 589825, 0, 196641, 589825, 0, 196642, 589825, 0, 196643, 589825, 0, 262179, 589825, 0, 327715, 589825, 0, 327714, 589825, 0, 327713, 589825, 0, 131100, 589825, 0, 196637, 589825, 0, 262174, 589825, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(0.5, 0.5)
+
+[node name="Back Button" type="Button" parent="."]
+offset_left = 160.0
+offset_top = 672.0
+offset_right = 545.0
+offset_bottom = 864.0
+theme_override_font_sizes/font_size = 60
+text = "Back to Main"
+
+[node name="Music" type="HSlider" parent="."]
+offset_left = 160.0
+offset_top = 544.0
+offset_right = 512.0
+offset_bottom = 560.0
+script = ExtResource("2_xgpkl")
+
+[node name="SFX" type="HSlider" parent="."]
+offset_left = 608.0
+offset_top = 544.0
+offset_right = 960.0
+offset_bottom = 560.0
+script = ExtResource("3_nmnue")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 160.0
+offset_top = 416.0
+offset_right = 384.0
+offset_bottom = 544.0
+theme_override_font_sizes/font_size = 60
+text = "Music"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 608.0
+offset_top = 416.0
+offset_right = 710.0
+offset_bottom = 499.0
+theme_override_font_sizes/font_size = 60
+text = "SFX"
+
+[node name="Fullscreen" type="Button" parent="."]
+offset_left = 1056.0
+offset_top = 480.0
+offset_right = 1440.0
+offset_bottom = 608.0
+theme_override_font_sizes/font_size = 60
+text = "Fullscreen"
+
+[connection signal="pressed" from="Back Button" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="Music" to="Music" method="_on_value_changed"]
+[connection signal="value_changed" from="SFX" to="SFX" method="_on_value_changed"]
+[connection signal="pressed" from="Fullscreen" to="." method="_on_fullscreen_pressed"]

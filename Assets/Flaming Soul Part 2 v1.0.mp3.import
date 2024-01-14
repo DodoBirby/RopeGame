@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/Flaming Soul Part 2 v1.0.mp3-d00676d444f9938f
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
