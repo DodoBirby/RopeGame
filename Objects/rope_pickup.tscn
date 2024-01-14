@@ -1,20 +1,73 @@
-[gd_scene load_steps=4 format=3 uid="uid://diw1h5do24n2v"]
+[gd_scene load_steps=11 format=3 uid="uid://diw1h5do24n2v"]
 
-[ext_resource type="Texture2D" uid="uid://ceiblxug25eyh" path="res://icon.svg" id="1_0atpf"]
+[ext_resource type="Texture2D" uid="uid://vhxdvopo88l7" path="res://Assets/Items/RopeUpgrade.png" id="1_52u74"]
 [ext_resource type="Script" path="res://Objects/rope_pickup.gd" id="2_3ffrt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_im6i1"]
+atlas = ExtResource("1_52u74")
+region = Rect2(0, 0, 17, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2phxx"]
+atlas = ExtResource("1_52u74")
+region = Rect2(17, 0, 17, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t24h"]
+atlas = ExtResource("1_52u74")
+region = Rect2(34, 0, 17, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_px2m7"]
+atlas = ExtResource("1_52u74")
+region = Rect2(51, 0, 17, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34iqj"]
+atlas = ExtResource("1_52u74")
+region = Rect2(68, 0, 17, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1og4j"]
+atlas = ExtResource("1_52u74")
+region = Rect2(85, 0, 17, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1rtsx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_im6i1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2phxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0t24h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_px2m7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34iqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1og4j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kntkr"]
 size = Vector2(132, 131.459)
 
-[node name="RopePickup" type="Sprite2D"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_0atpf")
+[node name="RopePickup" type="AnimatedSprite2D"]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_1rtsx")
+frame_progress = 0.842896
 script = ExtResource("2_3ffrt")
 
 [node name="PickupRadius" type="Area2D" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
+scale = Vector2(0.1, 0.1)
 shape = SubResource("RectangleShape2D_kntkr")
 
 [connection signal="body_entered" from="PickupRadius" to="." method="_on_pickup_radius_body_entered"]

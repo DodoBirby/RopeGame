@@ -315,10 +315,9 @@ func animator(delta):
 	if invincibility > 0:
 		spritecontroller.modulate = Color(1.0, 1.0, 1.0, 0.5) #Make player transparent when invincible
 	if hurtframe > 0:
-		
 		hurtframe -= 1
 		groupbody = "Hurt"
-		grouparms = "Void"
+		grouparms = ""
 		spritehead.frame = hurtdir
 		spritebody.frame = hurtdir
 		spritelegs.frame = hurtdir
