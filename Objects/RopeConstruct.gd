@@ -14,6 +14,10 @@ var jumpbuffer = 0
 @onready var collider = $StandingCollider
 @onready var throwsound = $Throw
 @onready var footstepsound = $Footstep
+@onready var landingsound = $Landing
+@onready var jumpsound = $Jumping
+@onready var wakesound = $Wake
+@onready var sleepsound = $Sleep
 
 #Animator
 @onready var pack = $CompositeSprite/ConsBackpack
@@ -59,6 +63,7 @@ func exit_state(oldstate) -> void:
 			collider.position.y = -3
 		STATES.AIRBORNE:
 			GlobalSignalBus.shake_camera(10)
+			landingsound.play()
 '''
 Runs when a new state is entered
 '''
@@ -133,6 +138,7 @@ func grounded_tick(delta):
 		running = false
 	if Input.is_action_just_pressed("Up") or jumpbuffer > 0:
 		velocity.y = -JUMPFORCE
+		jumpsound.play()
 		coyotetime = 0
 		jumpbuffer = 0
 	if Input.is_action_just_pressed("Down"):
@@ -172,6 +178,7 @@ func airborne_tick(delta):
 		if coyotetime > 0:
 			velocity.y = -JUMPFORCE
 			coyotetime = 0
+			jumpsound.play()
 		else:
 			jumpbuffer = 10
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.5)
@@ -210,6 +217,10 @@ func clap():
 		else:
 			awaketimer = 45
 		awake = !awake
+		if awake:
+			wakesound.play()
+		else:
+			sleepsound.play()
 		print("Calling func clap()")
 
 func take_damage():

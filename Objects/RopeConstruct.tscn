@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://c2am0ffc371cy"]
+[gd_scene load_steps=120 format=3 uid="uid://c2am0ffc371cy"]
 
 [ext_resource type="Script" path="res://Objects/RopeConstruct.gd" id="1_5enb5"]
 [ext_resource type="Texture2D" uid="uid://37xfqwjc2eaf" path="res://Assets/Construct/GrandpaBackpack.png" id="3_t86un"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://4pn1ikdglqgx" path="res://Assets/Construct/GrandpaBody.png" id="5_61g0l"]
 [ext_resource type="AudioStream" uid="uid://d0hq80ly2p11a" path="res://Assets/SFX/Throw.wav" id="6_dnab4"]
 [ext_resource type="Texture2D" uid="uid://deytxc8kg00m8" path="res://Assets/Construct/GrandpaLeg.png" id="6_x0ry7"]
+[ext_resource type="AudioStream" uid="uid://bpukpwvlf2d53" path="res://Assets/SFX/GrandpaLanding.wav" id="7_cs3nl"]
+[ext_resource type="AudioStream" uid="uid://c4j1t0w8q3mcu" path="res://Assets/SFX/GrandpaJump.wav" id="8_fsicb"]
+[ext_resource type="AudioStream" uid="uid://btyy8rvcmmgq8" path="res://Assets/SFX/GrandpaWake3.wav" id="9_xsp1s"]
+[ext_resource type="AudioStream" uid="uid://bqggfvd1kerx7" path="res://Assets/SFX/GrandpaSleep.wav" id="10_d0wlv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gm5gu"]
 size = Vector2(87, 132)
@@ -891,6 +895,27 @@ bus = &"SFX"
 
 [node name="Footstep" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_dnab4")
+volume_db = -12.0
+bus = &"SFX"
+
+[node name="Landing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_cs3nl")
+bus = &"SFX"
+
+[node name="Jumping" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_fsicb")
+volume_db = -12.0
+bus = &"SFX"
+
+[node name="Wake" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_xsp1s")
+volume_db = -12.0
+bus = &"SFX"
+
+[node name="Sleep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_d0wlv")
+volume_db = -12.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="PickupBox" to="." method="_on_pickup_box_body_entered"]
 [connection signal="body_exited" from="PickupBox" to="." method="_on_pickup_box_body_exited"]

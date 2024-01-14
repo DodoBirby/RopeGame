@@ -8,7 +8,7 @@ var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 90
 var tetherlength = 500.0
-var health = 1
+var health = 99
 var maxhealth = 2
 var invincibility = 0
 var clapcooldown = 60
@@ -27,11 +27,11 @@ var interact = "Down"
 
 @onready var collision= $BodyCollider
 @onready var ropeattach = $RopeAttachPoint
-@onready var footsteps = $Footstepper
 @onready var clapsound = $Clapper
 @onready var jumpsound = $Jump
 @onready var switchsound = $Switch
 @onready var somersaultsound = $Somersault
+@onready var pickupsound = $Pickup
 
 # Animator vars
 @onready var spritecontroller = $SpriteController
@@ -274,6 +274,7 @@ func take_damage():
 
 func rope_pickup():
 	tetherlength += 200
+	pickupsound.play()
 
 # Xander's Insane animator function
 
@@ -382,7 +383,3 @@ func _draw():
 		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.64), 5)
 
 
-func _on_legs_frame_changed():
-	if spritelegs.frame == 0 or spritelegs.frame == 6:
-		if groupbody == "Run":
-			footsteps.play()
