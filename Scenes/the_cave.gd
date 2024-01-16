@@ -6,4 +6,3 @@ func _ready():
 	tilerect.size *= 64
 	tilerect.position *= 64
 	GlobalSignalBus.cameralimitset.call_deferred(tilerect)
-	

@@ -68,10 +68,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5pjf"]
-size = Vector2(50, 52)
+size = Vector2(24, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ub6lq"]
-size = Vector2(52, 54)
+size = Vector2(24, 54)
 
 [node name="Crawler" type="CharacterBody2D"]
 collision_layer = 4
@@ -79,20 +79,22 @@ collision_mask = 47
 script = ExtResource("1_x3lqd")
 
 [node name="Goblin" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.4, 0.4)
+texture_filter = 1
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_65gab")
+frame_progress = 0.0231776
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_y5pjf")
 
 [node name="RayCast2DLeft" type="RayCast2D" parent="."]
-position = Vector2(-28, 24)
+position = Vector2(-9, 24)
 target_position = Vector2(0, 13)
 collision_mask = 8
 hit_from_inside = true
 
 [node name="RayCast2DRight" type="RayCast2D" parent="."]
-position = Vector2(28, 24)
+position = Vector2(-3, 24)
 target_position = Vector2(0, 13)
 collision_mask = 8
 hit_from_inside = true
@@ -104,13 +106,13 @@ collision_layer = 0
 shape = SubResource("RectangleShape2D_ub6lq")
 
 [node name="RayCast2DWallLeft" type="RayCast2D" parent="."]
-position = Vector2(-31, 0)
+position = Vector2(-13, 0)
 target_position = Vector2(-8, 0)
 collision_mask = 46
 hit_from_inside = true
 
 [node name="RayCast2DWallRight" type="RayCast2D" parent="."]
-position = Vector2(31, 0)
+position = Vector2(1, 0)
 target_position = Vector2(8, 0)
 collision_mask = 46
 hit_from_inside = true

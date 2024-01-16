@@ -1,0 +1,39 @@
+Changes I want to make
+
+Mechanics
+- Reeling in/out system for tether
+- Increase player friction when landing
+- Sync Buttons on same Layers
+- Start grandpa awake on new level/reset
+- Tweak Rope momentum to decay if not pressing a button
+- Tweak rope momentum to not instantly change direction when pressing
+- Add checkpoints
+- Add Rope Snapping if Grandpa falls out of Player's max rope range
+
+
+Later, not Now
+- Grandpa follows player when awake, within reason (won't fall 2+ tile large gaps)
+- Grandpa Tow Mode: When awake and hanging:(control grandpa with arrows, reel in/out with up/down to guide the player.)
+
+
+HUD
+- Add Hearts to HUD
+- Restore HP system
+
+
+Levels
+- I want to make more levels
+- Tutorial level needs extra stuff for standing on grandpa, and raise the door throw spot so you need both rope upgrades in the room.
+- Make the door require an interact to use
+
+
+Aesthetics
+- Make custom tileset so we aren't lookin like Cave Story fr fr
+
+
+Quality of Life/Settings
+- Change Jump button
+- Add control remapping
+- Better resolution settings
+- Raise default volume sliders, lower base volume
+-

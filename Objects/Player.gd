@@ -8,7 +8,7 @@ var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 90
 var tetherlength = 8
-var health = 1
+var health = 80
 var maxhealth = 2
 var invincibility = 0
 var clapcooldown = 60
@@ -99,6 +99,10 @@ func _physics_process(delta):
 	if transition != null:
 		change_state(transition)
 	animator(delta)
+	if facing == true:
+		transform.x.x = -1
+	else:
+		transform.x.x = 1
 
 '''
 Grounded state tick function
@@ -201,6 +205,9 @@ func exit_state(oldstate) -> void:
 		STATES.INACTIVE:
 			collision.disabled = false
 			visible = true
+		STATES.AIRBORNE:
+			if not Input.is_action_pressed("Left") or not Input.is_action_pressed("Right"):
+				velocity.x = 0
 
 '''
 Runs when a new state is entered
@@ -250,9 +257,8 @@ func state_transition():
 func throw(angle):
 	thrown = THROWN_FRAMES
 	active = true
-	print(thrown)
 	change_state(STATES.AIRBORNE)
-	position = tetherpoint.position + Vector2.UP * 140
+	position = tetherpoint.position + Vector2.UP * 50
 	var throwvector = Vector2.UP.rotated(angle)
 	velocity = throwvector * THROWFORCE * (tetherlength * 64 / 500.0)
 
@@ -269,7 +275,6 @@ func take_damage():
 		invincibility = INVINCIBILITY_FRAMES
 		health -= 1
 		GlobalSignalBus.player_damaged()
-		print(health)
 		if health <= 0:
 			die()
 
@@ -304,7 +309,7 @@ func animator(delta):
 	if state == STATES.GROUNDED:
 		if Input.is_action_just_pressed(interact) and not switchnearby:
 			if clapcooldown == 0 && cangrab == false && !isgrabbing:
-				clapcooldown = 15 * animspeed
+				clapcooldown = 35 / animspeed
 				isclapping = true
 			
 		if idle == true:
@@ -318,11 +323,11 @@ func animator(delta):
 			
 		if isclapping:
 			grouparms = "Clap"
-			if clapcooldown == 8 * animspeed:
+			if clapcooldown == 15 / animspeed:
 				tetherpoint.clap()
 				clapsound.play()
 				
-			if spritearms.animation == "Clap" && spritearms.frame == 8:
+			if spritearms.animation == "Clap" && spritearms.frame == 5:
 				isclapping = false
 			
 		if isgrabbing:
@@ -343,20 +348,13 @@ func animator(delta):
 	if thrown == 0:
 		spritebody.rotation = 0
 		somersaultsound.stop()
-	
+
 	play_if_valid(spritehead, groupbody, animspeed)
 	play_if_valid(spritebody, groupbody, animspeed)
 	play_if_valid(spritelegs, groupbody, animspeed)
 	play_if_valid(spritearms, grouparms, animspeed)
 	play_if_valid(spritearma, grouparms, animspeed)
 	play_if_valid(spritearmb, grouparms, animspeed)
-	
-	spritehead.flip_h = facing
-	spritebody.flip_h = facing
-	spritelegs.flip_h = facing
-	spritearma.flip_h = facing
-	spritearmb.flip_h = facing
-	spritearms.flip_h = facing
 
 # TODO Eventual "Mount the Construct" function.
 func mount():

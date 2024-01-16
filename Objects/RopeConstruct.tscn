@@ -12,16 +12,16 @@
 [ext_resource type="AudioStream" uid="uid://bqggfvd1kerx7" path="res://Assets/SFX/GrandpaSleep.wav" id="10_d0wlv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gm5gu"]
-size = Vector2(87, 132)
+size = Vector2(64, 112)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pf7tw"]
 size = Vector2(141, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqg2r"]
-size = Vector2(83, 121)
+size = Vector2(78, 106)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e4djp"]
-size = Vector2(83, 125)
+size = Vector2(61, 108)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hewve"]
 atlas = ExtResource("3_t86un")
@@ -840,7 +840,7 @@ script = ExtResource("1_5enb5")
 metadata/_edit_group_ = true
 
 [node name="StandingCollider" type="CollisionShape2D" parent="."]
-position = Vector2(-9, -3)
+position = Vector2(-6, 7)
 shape = SubResource("RectangleShape2D_gm5gu")
 
 [node name="PickupBox" type="Area2D" parent="."]
@@ -855,7 +855,7 @@ collision_layer = 0
 collision_mask = 45
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoClapBox"]
-position = Vector2(-10.5, -3.5)
+position = Vector2(-13, 4)
 shape = SubResource("RectangleShape2D_sqg2r")
 
 [node name="NoMountBox" type="Area2D" parent="."]
@@ -863,7 +863,7 @@ collision_layer = 0
 collision_mask = 44
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoMountBox"]
-position = Vector2(-9.5, -3.5)
+position = Vector2(-5.5, 5)
 shape = SubResource("RectangleShape2D_e4djp")
 
 [node name="CompositeSprite" type="Node2D" parent="."]
@@ -882,7 +882,7 @@ animation = &"Idle"
 
 [node name="ConsBody" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_xr7v5")
-animation = &"Run"
+animation = &"Idle"
 
 [node name="ConsLeg" type="AnimatedSprite2D" parent="CompositeSprite"]
 sprite_frames = SubResource("SpriteFrames_smx7o")

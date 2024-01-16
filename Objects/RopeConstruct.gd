@@ -49,8 +49,13 @@ func _ready():
 	
 	# Initial state
 	state = STATES.DORMANT
+	var parent : Node = get_parent()
+	if parent.name == "TheCave":
+		awake = false
+	else:
+		awake = true
 	
-'''
+''' 
 Runs when a state is exited
 '''
 func exit_state(oldstate) -> void:
@@ -59,8 +64,9 @@ func exit_state(oldstate) -> void:
 			set_collision_layer_value(2, true)
 			set_collision_mask_value(6, true)
 			modulate = Color(1, 1, 1)
-			collider.shape.size.y = 132
-			collider.position.y = -3
+			collider.shape.size.y = 112
+			collider.shape.size.x = 64
+			collider.position.y = 7
 		STATES.AIRBORNE:
 			GlobalSignalBus.shake_camera(10)
 			landingsound.play()
@@ -88,6 +94,10 @@ func state_tick(delta) -> void:
 		awaketimer -= 1
 	if sleeptimer > 0:
 		sleeptimer -= 1
+	if facing == true:
+		transform.x.x = -1
+	else:
+		transform.x.x = 1
 
 func dormant_tick(delta):
 	for body in NoMountBox.get_overlapping_bodies():
@@ -100,8 +110,9 @@ func dormant_tick(delta):
 			set_collision_layer_value(2, false)
 			set_collision_mask_value(6, false)
 			modulate = Color(1, 1, 1)
-			collider.shape.size.y = 132
-			collider.position.y = -3
+			collider.shape.size.y = 112
+			collider.shape.size.x = 64
+			collider.position.y = 7
 			if colliding and Input.is_action_just_pressed("Up") and not NoMountBox.has_overlapping_bodies():
 				player.active = false
 				player.visible = false
@@ -109,8 +120,9 @@ func dormant_tick(delta):
 		else:
 			set_collision_layer_value(2, true)
 			set_collision_mask_value(6, true)
-			collider.shape.size.y = 108
-			collider.position.y = 9
+			collider.shape.size.y = 84
+			collider.shape.size.x = 64
+			collider.position.y = 21
 		move_and_slide()
 		for i in get_slide_collision_count():
 			var c = get_slide_collision(i)
@@ -221,7 +233,6 @@ func clap():
 			wakesound.play()
 		else:
 			sleepsound.play()
-		print("Calling func clap()")
 
 func take_damage():
 	if state != STATES.DORMANT:
@@ -252,7 +263,6 @@ func animator(delta):
 			animationgroup = "Sleep"
 			body.frame = 3
 			sleeptimer = 24
-			print("Hello")
 		else:
 			animationgroup = "Dormant"
 		if sleeptimer > 0:
@@ -281,10 +291,7 @@ func animator(delta):
 	play_if_valid(pack, animationgroup, animspeed)
 	play_if_valid(body, animationgroup, animspeed)
 	play_if_valid(leg, animationgroup, animspeed)
-	pack.flip_h = facing
-	body.flip_h = facing
-	leg.flip_h = facing
-	mounted.flip_h = facing
+
 
 #Yoink
 func play_if_valid(sprite: AnimatedSprite2D, animation: String, animspeed):

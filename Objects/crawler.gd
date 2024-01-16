@@ -35,7 +35,7 @@ func take_damage():
 
 func animator(delta):
 	if facing == 1:
-		goblin.flip_h = false
+		transform.x.x = -1
 	else:
-		goblin.flip_h = true
+		transform.x.x = 1
 	goblin.play("default")
