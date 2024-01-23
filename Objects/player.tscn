@@ -1,4 +1,4 @@
-[gd_scene load_steps=251 format=3 uid="uid://vnywocngypip"]
+[gd_scene load_steps=252 format=3 uid="uid://vnywocngypip"]
 
 [ext_resource type="Script" path="res://Objects/Player.gd" id="1_5qksl"]
 [ext_resource type="Texture2D" uid="uid://bwmvsvbbvuy8s" path="res://Assets/Character/PlayerHeadSheet.png" id="2_2xq00"]
@@ -1846,6 +1846,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucwv2"]
 size = Vector2(5.99996, 3.41993)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqn1p"]
+size = Vector2(19.5, 24)
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 2
 texture_filter = 2
@@ -1911,8 +1914,7 @@ position = Vector2(8, -19)
 
 [node name="PullStopRay" type="RayCast2D" parent="."]
 position = Vector2(12, -29)
-scale = Vector2(0.01, 0.01)
-target_position = Vector2(0, -5)
+target_position = Vector2(0, -30)
 collision_mask = 8
 collide_with_areas = true
 
@@ -1940,3 +1942,11 @@ bus = &"SFX"
 stream = ExtResource("12_gw7tp")
 volume_db = -12.0
 bus = &"SFX"
+
+[node name="InWallDetector" type="Area2D" parent="."]
+collision_layer = 44
+collision_mask = 44
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InWallDetector"]
+position = Vector2(12.25, -26)
+shape = SubResource("RectangleShape2D_dqn1p")

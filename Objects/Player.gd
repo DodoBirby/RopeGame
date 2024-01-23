@@ -11,6 +11,7 @@ var tetherlength = 8
 var reelmax = tetherlength * 64
 var reellength = reelmax
 var reelspeed = 3
+var reelable = true
 var health = 80
 var maxhealth = 2
 var invincibility = 0
@@ -109,6 +110,12 @@ func _physics_process(delta):
 	else:
 		transform.x.x = 1
 	_pullstop()
+	for body in $InWallDetector.get_overlapping_bodies():
+		if body is TileMap:
+			if facing == true:
+				position.x += 64
+			else:
+				position.x -= 64
 
 '''
 Grounded state tick function
@@ -172,7 +179,7 @@ func airborne_tick(delta):
 	if Input.is_action_just_pressed("Down"):
 		pass
 	if Input.is_action_pressed("ReelIn"):
-		if reellength <= reelmax:
+		if reelable == true:
 			reellength -= reelspeed
 	if Input.is_action_pressed("ReelOut"):
 		if reellength <= reelmax:
@@ -223,6 +230,7 @@ func exit_state(oldstate) -> void:
 			if not Input.is_action_pressed("Left") and not Input.is_action_pressed("Right"):
 				velocity.x = 0
 			reellength = reelmax
+			reelable = true
 
 '''
 Runs when a new state is entered
@@ -294,7 +302,7 @@ func take_damage():
 			die()
 
 func rope_pickup():
-	tetherlength += 2
+	tetherlength += 3
 	reelmax = tetherlength * 64
 	pickupsound.play()
 
@@ -395,14 +403,30 @@ func dismount():
 
 func _draw():
 	if active:
-		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.0), 5)
+		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.64), 5)
+	draw_line(to_local(pullstop.global_position), pullstop.target_position, Color(0, 0.16, 0.64), 5)
 
 func _pullstop():
-	var pullstopmax = 22
-	pullstop.target_position = Vector2(tetherpoint.position)
+	var pullstop_relpos = tetherpoint.global_position - pullstop.global_position
+	pullstop.target_position = Vector2(pullstop_relpos)
+	if facing == true:
+		pullstop.target_position.x = pullstop_relpos.x * -1
 	pullstop.exclude_parent = true
-	var temp = pullstop.get_collision_point()
-	print(temp)
-	draw_line(position, temp, Color(0.2, 0, 0, 1))
-	var temp2 = tetherpoint.position
-	print(temp2)
+	if pullstop.is_colliding():
+		var pullpoint = pullstop.get_collision_point()
+		var pullstop_threshold = global_position - pullpoint
+		if pullstop.target_position.y < 0:
+			if pullstop_threshold.y < 60 && pullstop_threshold.y > -10:
+				if pullstop_threshold.x < 25 && pullstop_threshold.x > -25:
+					reelable = false
+				else:
+					reelable = true
+			else:
+				reelable = true
+		if pullstop.target_position.y > 0:
+			if pullstop_threshold.y < 20 && pullstop_threshold.y > -20:
+				if pullstop_threshold.x < 25 && pullstop_threshold.x > -25:
+					reelable = false
+				else:
+					reelable = true
+		print(pullstop_threshold)
