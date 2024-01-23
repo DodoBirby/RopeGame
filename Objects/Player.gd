@@ -8,6 +8,9 @@ var TIME_TO_PEAK: float = 0.5
 var THROWFORCE = 1300.0
 var INVINCIBILITY_FRAMES = 90
 var tetherlength = 8
+var reelmax = tetherlength * 64
+var reellength = reelmax
+var reelspeed = 3
 var health = 80
 var maxhealth = 2
 var invincibility = 0
@@ -22,6 +25,7 @@ var respawnpos: Vector2
 var switchnearby: Switch = null
 
 
+
 # Control Vars
 var interact = "Down"
 
@@ -32,6 +36,7 @@ var interact = "Down"
 @onready var switchsound = $Switch
 @onready var somersaultsound = $Somersault
 @onready var pickupsound = $Pickup
+@onready var pullstop = $PullStopRay
 
 # Animator vars
 @onready var spritecontroller = $SpriteController
@@ -103,6 +108,7 @@ func _physics_process(delta):
 		transform.x.x = -1
 	else:
 		transform.x.x = 1
+	_pullstop()
 
 '''
 Grounded state tick function
@@ -132,8 +138,8 @@ func grounded_tick(delta):
 		coyotetime = 0
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
 	var tethervector = tetherpoint.position - position
-	if (tethervector.length() > tetherlength * 64 + 20):
-		position += tethervector.normalized() * (tethervector.length() - tetherlength * 64 - 20)
+	if (tethervector.length() > reellength + 20):
+		position += tethervector.normalized() * (tethervector.length() - reellength - 20)
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -165,6 +171,14 @@ func airborne_tick(delta):
 		
 	if Input.is_action_just_pressed("Down"):
 		pass
+	if Input.is_action_pressed("ReelIn"):
+		if reellength <= reelmax:
+			reellength -= reelspeed
+	if Input.is_action_pressed("ReelOut"):
+		if reellength <= reelmax:
+			reellength += reelspeed
+	if reellength > reelmax:
+		reellength = reelmax
 	if dir != 0:
 		var speedcap
 		if dir == 1:
@@ -175,13 +189,13 @@ func airborne_tick(delta):
 	velocity.y += GRAVITY * delta * gravmultiplier
 	var tethervector = tetherpoint.position - position
 	var dotproduct = tethervector.normalized().dot(velocity)
-	if (dotproduct < 0 and tethervector.length() > tetherlength * 64):
+	if (dotproduct < 0 and tethervector.length() > reellength):
 		var multiplier = 1
 		if dotproduct < -300:
 			multiplier = 1.5
 		velocity += -dotproduct * tethervector.normalized() * multiplier
-	if (tethervector.length() > tetherlength * 64 + 20):
-		position += tethervector.normalized() * (tethervector.length() - tetherlength * 64 - 20)
+	if (tethervector.length() > reellength + 20):
+		position += tethervector.normalized() * (tethervector.length() - reellength - 20)
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -206,8 +220,9 @@ func exit_state(oldstate) -> void:
 			collision.disabled = false
 			visible = true
 		STATES.AIRBORNE:
-			if not Input.is_action_pressed("Left") or not Input.is_action_pressed("Right"):
+			if not Input.is_action_pressed("Left") and not Input.is_action_pressed("Right"):
 				velocity.x = 0
+			reellength = reelmax
 
 '''
 Runs when a new state is entered
@@ -279,7 +294,8 @@ func take_damage():
 			die()
 
 func rope_pickup():
-	tetherlength += 3
+	tetherlength += 2
+	reelmax = tetherlength * 64
 	pickupsound.play()
 
 # Xander's Insane animator function
@@ -379,6 +395,14 @@ func dismount():
 
 func _draw():
 	if active:
-		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.64), 5)
+		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.0), 5)
 
-
+func _pullstop():
+	var pullstopmax = 22
+	pullstop.target_position = Vector2(tetherpoint.position)
+	pullstop.exclude_parent = true
+	var temp = pullstop.get_collision_point()
+	print(temp)
+	draw_line(position, temp, Color(0.2, 0, 0, 1))
+	var temp2 = tetherpoint.position
+	print(temp2)

@@ -1909,6 +1909,13 @@ position = Vector2(-27, -57)
 [node name="RopeAttachPoint" type="Node2D" parent="."]
 position = Vector2(8, -19)
 
+[node name="PullStopRay" type="RayCast2D" parent="."]
+position = Vector2(12, -29)
+scale = Vector2(0.01, 0.01)
+target_position = Vector2(0, -5)
+collision_mask = 8
+collide_with_areas = true
+
 [node name="Clapper" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_plxyx")
 volume_db = 3.0
