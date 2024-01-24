@@ -9,7 +9,7 @@ extends Enemy
 
 var facing = 1
 @onready var goblin = $Goblin
-var MOVESPEED: float = 300
+var MOVESPEED: float = 200
 var GRAVITY = 400.0
 
 func _physics_process(delta):
@@ -22,10 +22,8 @@ func _physics_process(delta):
 		facing = 1
 	elif facing == 1 and not raycastright.is_colliding():
 		facing = -1
-	if facing == 1 and raycastwallright.is_colliding():
-		facing = -1
-	elif facing == -1 and raycastwallleft.is_colliding():
-		facing = 1
+	if raycastwallleft.is_colliding():
+		facing *= -1
 	move_and_slide()
 	animator(delta)
 

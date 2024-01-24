@@ -1859,7 +1859,7 @@ script = ExtResource("1_5qksl")
 
 [node name="SpriteController" type="Node2D" parent="."]
 texture_filter = 1
-position = Vector2(-36, -76)
+position = Vector2(-48, -76)
 scale = Vector2(4, 4)
 
 [node name="BackgroundArm" type="AnimatedSprite2D" parent="SpriteController"]
@@ -1901,19 +1901,19 @@ centered = false
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
 texture_filter = 1
-position = Vector2(12, -28.5)
+position = Vector2(0, -28.5)
 rotation = -3.14159
 scale = Vector2(4, -16.667)
 shape = SubResource("RectangleShape2D_ucwv2")
 
 [node name="Colliders" type="Node2D" parent="."]
-position = Vector2(-27, -57)
+position = Vector2(-39, -57)
 
 [node name="RopeAttachPoint" type="Node2D" parent="."]
-position = Vector2(8, -19)
+position = Vector2(-4, -19)
 
 [node name="PullStopRay" type="RayCast2D" parent="."]
-position = Vector2(12, -29)
+position = Vector2(0, -29)
 target_position = Vector2(0, -30)
 collision_mask = 8
 collide_with_areas = true
@@ -1944,6 +1944,7 @@ volume_db = -12.0
 bus = &"SFX"
 
 [node name="InWallDetector" type="Area2D" parent="."]
+position = Vector2(-12, 0)
 collision_layer = 44
 collision_mask = 44
 

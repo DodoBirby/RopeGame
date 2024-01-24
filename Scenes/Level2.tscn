@@ -22,7 +22,7 @@ layer_3/tile_data = PackedInt32Array(2883664, 1114113, 0, 2949200, 1114113, 1, 2
 script = ExtResource("2_vvx6b")
 
 [node name="Player" parent="." instance=ExtResource("3_hdmr1")]
-position = Vector2(328, 2016)
+position = Vector2(468, 1473)
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1

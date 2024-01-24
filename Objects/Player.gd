@@ -430,3 +430,5 @@ func _pullstop():
 				else:
 					reelable = true
 		print(pullstop_threshold)
+	else:
+		reelable = true
