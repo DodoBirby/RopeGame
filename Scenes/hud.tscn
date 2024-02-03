@@ -1,11 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctgcni7frbq24"]
+[gd_scene load_steps=6 format=3 uid="uid://ctgcni7frbq24"]
 
 [ext_resource type="Script" path="res://Scenes/hud.gd" id="1_tgjss"]
 [ext_resource type="Shader" path="res://Scenes/Circle.gdshader" id="2_i3efe"]
+[ext_resource type="Texture2D" uid="uid://cylssetuvtjuw" path="res://Assets/HeartsHud2x.png" id="3_yocs0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3hlcv"]
 shader = ExtResource("2_i3efe")
 shader_parameter/radius = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1bn1"]
+atlas = ExtResource("3_yocs0")
+region = Rect2(0, 0, 228, 64)
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_tgjss")
@@ -18,3 +23,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="HeartTexture" type="TextureRect" parent="Control/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = SubResource("AtlasTexture_f1bn1")

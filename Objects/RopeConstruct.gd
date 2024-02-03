@@ -11,7 +11,7 @@ var colliding = false
 var coyotetime = 0
 var jumpbuffer = 0
 
-@onready var collider = $StandingCollider
+@onready var collider = %StandingCollider
 @onready var throwsound = $Throw
 @onready var footstepsound = $Footstep
 @onready var landingsound = $Landing
@@ -20,10 +20,10 @@ var jumpbuffer = 0
 @onready var sleepsound = $Sleep
 
 #Animator
-@onready var pack = $CompositeSprite/ConsBackpack
-@onready var body = $CompositeSprite/ConsBody
-@onready var leg = $CompositeSprite/ConsLeg
-@onready var mounted = $CompositeSprite/ConsMounted
+@onready var pack = %CompositeSprite/ConsBackpack
+@onready var body = %CompositeSprite/ConsBody
+@onready var leg = %CompositeSprite/ConsLeg
+@onready var mounted = %CompositeSprite/ConsMounted
 var animationgroup = "Idle"
 var running = false
 var animspeed = 2
@@ -31,9 +31,10 @@ var facing = true
 var throwtimer = 0
 var sleeptimer = 0
 var awaketimer = 0
+var airtimer = 0
 
-@onready var NoClapBox = $NoClapBox
-@onready var NoMountBox = $NoMountBox
+@onready var NoClapBox = %NoClapBox
+@onready var NoMountBox = %NoMountBox
 
 var PUSH_FORCE = 100.0
 
@@ -68,13 +69,16 @@ func exit_state(oldstate) -> void:
 			collider.shape.size.x = 64
 			collider.position.y = 7
 		STATES.AIRBORNE:
-			GlobalSignalBus.shake_camera(10)
-			landingsound.play()
+			if airtimer > 15:
+				GlobalSignalBus.shake_camera(10)
+				landingsound.play()
 '''
 Runs when a new state is entered
 '''
 func enter_state(newstate) -> void:
-	pass
+	match newstate:
+		STATES.AIRBORNE:
+			airtimer = 0
 
 '''
 Runs per frame state logic
@@ -94,6 +98,7 @@ func state_tick(delta) -> void:
 		awaketimer -= 1
 	if sleeptimer > 0:
 		sleeptimer -= 1
+	airtimer += 1
 	if facing == true:
 		transform.x.x = -1
 	else:

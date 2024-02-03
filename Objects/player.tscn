@@ -1,4 +1,4 @@
-[gd_scene load_steps=252 format=3 uid="uid://vnywocngypip"]
+[gd_scene load_steps=253 format=3 uid="uid://vnywocngypip"]
 
 [ext_resource type="Script" path="res://Objects/Player.gd" id="1_5qksl"]
 [ext_resource type="Texture2D" uid="uid://bwmvsvbbvuy8s" path="res://Assets/Character/PlayerHeadSheet.png" id="2_2xq00"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://ca8nua0co6fwf" path="res://Assets/SFX/Switch.wav" id="11_kp2qu"]
 [ext_resource type="AudioStream" uid="uid://b0yfs3t2komcb" path="res://Assets/SFX/Somersault2.wav" id="12_6myel"]
 [ext_resource type="AudioStream" uid="uid://cx3i8xtenl52o" path="res://Assets/SFX/ItemGet.wav" id="12_gw7tp"]
+[ext_resource type="PackedScene" uid="uid://ctgcni7frbq24" path="res://Scenes/hud.tscn" id="13_3vc6t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_unef4"]
 atlas = ExtResource("5_osvwk")
@@ -1858,6 +1859,7 @@ floor_snap_length = 5.0
 script = ExtResource("1_5qksl")
 
 [node name="SpriteController" type="Node2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(-48, -76)
 scale = Vector2(4, 4)
@@ -1900,6 +1902,7 @@ animation = &"PullingImmovable"
 centered = false
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(0, -28.5)
 rotation = -3.14159
@@ -1910,13 +1913,8 @@ shape = SubResource("RectangleShape2D_ucwv2")
 position = Vector2(-39, -57)
 
 [node name="RopeAttachPoint" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(-4, -19)
-
-[node name="PullStopRay" type="RayCast2D" parent="."]
-position = Vector2(0, -29)
-target_position = Vector2(0, -30)
-collision_mask = 8
-collide_with_areas = true
 
 [node name="Clapper" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_plxyx")
@@ -1951,3 +1949,5 @@ collision_mask = 44
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InWallDetector"]
 position = Vector2(12.25, -26)
 shape = SubResource("RectangleShape2D_dqn1p")
+
+[node name="HUD" parent="." instance=ExtResource("13_3vc6t")]

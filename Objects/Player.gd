@@ -12,8 +12,8 @@ var reelmax = tetherlength * 64
 var reellength = reelmax
 var reelspeed = 3
 var reelable = true
-var health = 80
-var maxhealth = 2
+var health = 3
+var maxhealth = 3
 var invincibility = 0
 var clapcooldown = 60
 var coyotetime = 0
@@ -30,26 +30,25 @@ var switchnearby: Switch = null
 # Control Vars
 var interact = "Down"
 
-@onready var collision= $BodyCollider
-@onready var ropeattach = $RopeAttachPoint
+@onready var collision= %BodyCollider
+@onready var ropeattach = %RopeAttachPoint
 @onready var clapsound = $Clapper
 @onready var jumpsound = $Jump
 @onready var switchsound = $Switch
 @onready var somersaultsound = $Somersault
 @onready var pickupsound = $Pickup
-@onready var pullstop = $PullStopRay
 
 # Animator vars
-@onready var spritecontroller = $SpriteController
-@onready var spritehead = $SpriteController/Head
-@onready var spritebody = $SpriteController/Torso
-@onready var spritelegs = $SpriteController/Legs
-@onready var spritearms = $SpriteController/BodyArm
-@onready var spritearmb = $SpriteController/BackgroundArm
-@onready var spritearma = $SpriteController/ForegroundArm
+@onready var spritecontroller = %SpriteController
+@onready var spritehead = %SpriteController/Head
+@onready var spritebody = %SpriteController/Torso
+@onready var spritelegs = %SpriteController/Legs
+@onready var spritearms = %SpriteController/BodyArm
+@onready var spritearmb = %SpriteController/BackgroundArm
+@onready var spritearma = %SpriteController/ForegroundArm
 var groupbody = &"Idle"
 var grouparms = &"Idle" 
-var facing = false
+var facingLeft = false
 var cangrab = false
 var idle = true
 var animspeed = 3
@@ -91,8 +90,8 @@ func _ready():
 	camera.player = self
 	camera.position = position
 	camera.construct = tetherpoint
-	hud = hud_scene.instantiate()
-	get_parent().add_child.call_deferred(hud)
+	#hud = hud_scene.instantiate()
+	#get_parent().add_child.call_deferred(hud)
 	
 '''
 Runs once every frame (60fps)
@@ -105,14 +104,14 @@ func _physics_process(delta):
 	if transition != null:
 		change_state(transition)
 	animator(delta)
-	if facing == true:
+	if facingLeft == true:
 		transform.x.x = -1
 	else:
 		transform.x.x = 1
-	_pullstop()
+
 	for body in $InWallDetector.get_overlapping_bodies():
 		if body is TileMap:
-			if facing == true:
+			if facingLeft == true:
 				position.x += 64
 			else:
 				position.x -= 64
@@ -126,11 +125,11 @@ func grounded_tick(delta):
 	coyotetime = 8
 	if Input.is_action_pressed("Left"):
 		dir = -1
-		facing = true
+		facingLeft = true
 		idle = false
 	elif Input.is_action_pressed("Right"):
 		dir = 1
-		facing = false
+		facingLeft = false
 		idle = false
 	else:
 		idle = true
@@ -144,9 +143,7 @@ func grounded_tick(delta):
 		jumpbuffer = 0
 		coyotetime = 0
 	velocity.x = lerp(velocity.x, float(MOVESPEED * dir), 0.3)
-	var tethervector = tetherpoint.position - position
-	if (tethervector.length() > reellength + 20):
-		position += tethervector.normalized() * (tethervector.length() - reellength - 20)
+	rope_movement_max_length_stop()
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -162,10 +159,10 @@ func airborne_tick(delta):
 	var gravmultiplier = 1
 	if Input.is_action_pressed("Left"):
 		dir = -1
-		facing = true
+		facingLeft = true
 	elif Input.is_action_pressed("Right"):
 		dir = 1
-		facing = false
+		facingLeft = false
 	if not Input.is_action_pressed("Up"):
 		gravmultiplier = 3
 	if Input.is_action_just_pressed("Up"):
@@ -179,11 +176,10 @@ func airborne_tick(delta):
 	if Input.is_action_just_pressed("Down"):
 		pass
 	if Input.is_action_pressed("ReelIn"):
-		if reelable == true:
-			reellength -= reelspeed
+		reellength -= reelspeed
 	if Input.is_action_pressed("ReelOut"):
-		if reellength <= reelmax:
-			reellength += reelspeed
+		reellength += reelspeed
+		move_and_collide(Vector2(0, reelspeed))
 	if reellength > reelmax:
 		reellength = reelmax
 	if dir != 0:
@@ -194,15 +190,8 @@ func airborne_tick(delta):
 			speedcap = min(velocity.x, -MOVESPEED)
 		velocity.x = lerp(velocity.x, float(speedcap), 0.3)
 	velocity.y += GRAVITY * delta * gravmultiplier
-	var tethervector = tetherpoint.position - position
-	var dotproduct = tethervector.normalized().dot(velocity)
-	if (dotproduct < 0 and tethervector.length() > reellength):
-		var multiplier = 1
-		if dotproduct < -300:
-			multiplier = 1.5
-		velocity += -dotproduct * tethervector.normalized() * multiplier
-	if (tethervector.length() > reellength + 20):
-		position += tethervector.normalized() * (tethervector.length() - reellength - 20)
+	rope_movement()
+	rope_movement_max_length_stop()
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
@@ -289,6 +278,22 @@ func die():
 	get_tree().reload_current_scene.call_deferred()
 	#TODO Respawn
 
+func rope_movement_max_length_stop():
+	var tethervector = tetherpoint.position - position
+	if (tethervector.length() > reellength + 20):
+		var correction_vector = tethervector.normalized() * (tethervector.length() - reellength - 20)
+		move_and_collide(Vector2(correction_vector.x, 0))
+		move_and_collide(Vector2(0, correction_vector.y))
+func rope_movement():
+	var tethervector = tetherpoint.position - position
+	var dotproduct = tethervector.normalized().dot(velocity)
+	if (dotproduct < 0 and tethervector.length() > reellength):
+		var multiplier = 1
+		if dotproduct < -500:
+			multiplier = 1.5
+		velocity += -dotproduct * tethervector.normalized() * multiplier
+	
+
 func take_damage():
 	
 	#TODO add direction the player took damage from, send away from source and set `hurtdir` appropriately. remove player control while in hurtframes.
@@ -297,7 +302,8 @@ func take_damage():
 		hurtframe = 30
 		invincibility = INVINCIBILITY_FRAMES
 		health -= 1
-		GlobalSignalBus.player_damaged()
+		var healthratio: float = float(health) / maxhealth
+		GlobalSignalBus.player_damaged(healthratio)
 		if health <= 0:
 			die()
 
@@ -326,7 +332,7 @@ func animator(delta):
 			groupbody = "Thrown"
 			if not somersaultsound.playing:
 				somersaultsound.play()
-			if facing == true:
+			if facingLeft == true:
 				spritebody.rotation -= 1
 			else:
 				spritebody.rotation += 1
@@ -404,31 +410,3 @@ func dismount():
 func _draw():
 	if active:
 		draw_line(to_local(ropeattach.global_position), to_local(tetherpoint.global_position), Color(0.46, 0.16, 0.64), 5)
-	draw_line(to_local(pullstop.global_position), pullstop.target_position, Color(0, 0.16, 0.64), 5)
-
-func _pullstop():
-	var pullstop_relpos = tetherpoint.global_position - pullstop.global_position
-	pullstop.target_position = Vector2(pullstop_relpos)
-	if facing == true:
-		pullstop.target_position.x = pullstop_relpos.x * -1
-	pullstop.exclude_parent = true
-	if pullstop.is_colliding():
-		var pullpoint = pullstop.get_collision_point()
-		var pullstop_threshold = global_position - pullpoint
-		if pullstop.target_position.y < 0:
-			if pullstop_threshold.y < 60 && pullstop_threshold.y > -10:
-				if pullstop_threshold.x < 25 && pullstop_threshold.x > -25:
-					reelable = false
-				else:
-					reelable = true
-			else:
-				reelable = true
-		if pullstop.target_position.y > 0:
-			if pullstop_threshold.y < 20 && pullstop_threshold.y > -20:
-				if pullstop_threshold.x < 25 && pullstop_threshold.x > -25:
-					reelable = false
-				else:
-					reelable = true
-		print(pullstop_threshold)
-	else:
-		reelable = true
